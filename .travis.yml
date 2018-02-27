@@ -1,0 +1,12 @@
+sudo: false
+dist: trusty
+language: c
+compiler:
+  - gcc
+addons:
+  apt:
+    packages:
+    - libreadline6-dev
+    - libncurses5-dev
+    - perl
+script: sh build-epics.sh </dev/null
