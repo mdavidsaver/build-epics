@@ -15,20 +15,22 @@ set -e -x
 
 rm -rf epics-base calc recsync autosave busy asyn motor motorsim p4p masarService
 
-git clone --branch core/master https://github.com/epics-base/epics-base.git
+DEPTH=--depth 5
+
+git clone $DEPTH --branch core/master https://github.com/epics-base/epics-base.git
 (cd epics-base \
   && git checkout R7.0.1.1-48-g57acac8fb \
-  && git submodule update --init --reference . \
+  && git submodule update $DEPTH --init --reference . \
 )
-git clone https://github.com/ChannelFinder/recsync.git
-git clone --branch R5-9 https://github.com/epics-modules/autosave.git
-git clone --branch R3-7 https://github.com/epics-modules/calc.git
-git clone --branch R1-7 https://github.com/epics-modules/busy.git
-git clone --branch R4-33 https://github.com/epics-modules/asyn.git
-git clone https://github.com/epics-modules/motor.git
-git clone https://github.com/mdavidsaver/motorsim.git
-git clone https://github.com/mdavidsaver/p4p.git
-git clone https://github.com/mdavidsaver/masarService.git
+git clone $DEPTH https://github.com/ChannelFinder/recsync.git
+git clone $DEPTH --branch R5-9 https://github.com/epics-modules/autosave.git
+git clone $DEPTH --branch R3-7 https://github.com/epics-modules/calc.git
+git clone $DEPTH --branch R1-7 https://github.com/epics-modules/busy.git
+git clone $DEPTH --branch R4-33 https://github.com/epics-modules/asyn.git
+git clone $DEPTH https://github.com/epics-modules/motor.git
+git clone $DEPTH https://github.com/mdavidsaver/motorsim.git
+git clone $DEPTH https://github.com/mdavidsaver/p4p.git
+git clone $DEPTH https://github.com/mdavidsaver/masarService.git
 
 # epics-base
 cat <<EOF > epics-base/configure/CONFIG_SITE.local
