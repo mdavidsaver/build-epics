@@ -9,4 +9,4 @@ addons:
     - libreadline6-dev
     - libncurses5-dev
     - perl
-script: sh build-epics.sh </dev/null
+script: sh build-epics.sh -j2 </dev/null

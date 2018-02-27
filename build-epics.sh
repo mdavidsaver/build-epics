@@ -15,12 +15,12 @@ set -e -x
 
 rm -rf epics-base calc recsync autosave busy asyn motor motorsim p4p masarService
 
-DEPTH=--depth 5
+DEPTH="--depth 5"
 
-git clone $DEPTH --branch core/master https://github.com/epics-base/epics-base.git
+git clone --branch core/master https://github.com/epics-base/epics-base.git
 (cd epics-base \
   && git checkout R7.0.1.1-48-g57acac8fb \
-  && git submodule update $DEPTH --init --reference . \
+  && git submodule update --init --reference . \
 )
 git clone $DEPTH https://github.com/ChannelFinder/recsync.git
 git clone $DEPTH --branch R5-9 https://github.com/epics-modules/autosave.git
