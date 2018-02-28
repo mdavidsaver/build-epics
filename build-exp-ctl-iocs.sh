@@ -25,11 +25,11 @@ git clone $DEPTH https://github.com/waynelewis/ioc_scan.git iocs/scan
 # Set up scan IOC RELEASE file
 cat <<EOF > iocs/scan/configure/RELEASE
 TEMPLATE_TOP=\$(EPICS_BASE)/templates/makeBaseApp/top
-SUPPORT=$PWD
+SUPPORT=$PWD/support_tmp
 SSCAN=\$(SUPPORT)/sscan
 AUTOSAVE=\$(SUPPORT)/autosave
 CALC=\$(SUPPORT)/calc
-EPICS_BASE=$PWD/epics-base
+EPICS_BASE=$PWD/base3
 EOF
 
 # Build scan IOC
