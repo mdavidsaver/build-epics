@@ -51,3 +51,7 @@ mkdir -p iocs
   && ln -sfn ../motorsim
 )
 
+(cd iocs/simDetectorIOC/iocBoot/iocSimDetector \
+  && ln -sfn envPaths envPaths.linux \
+)
+
