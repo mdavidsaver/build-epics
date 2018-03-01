@@ -7,6 +7,5 @@ set -e -x
 ./build-epics/build-epics.sh
 ./build-epics/build-exp-ctl-support.sh
 ./build-epics/build-exp-ctl-support-sscan7.sh
-./build-epics/build-exp-ctl-support-ad7.sh
 ./build-epics/build-exp-ctl-iocs.sh
 

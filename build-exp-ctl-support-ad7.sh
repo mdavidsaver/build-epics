@@ -11,7 +11,7 @@ set -e -x
 #
 
 # Clean up
-rm -rf areaDetector sscan
+rm -rf areaDetector 
 
 # Get the support module code
 DEPTH="--depth 5"
@@ -33,8 +33,6 @@ git clone $DEPTH --branch R3-2 https://github.com/areaDetector/areaDetector.git
 (cd areaDetector/ADCSimDetector \
   && git checkout R2-5 \
   )
-
-git clone $DEPTH --branch R2-11-1 https://github.com/epics-modules/sscan.git sscan
 
 # areaDetector
 ## Create config files
@@ -94,11 +92,5 @@ ADSUPPORT=\$(AREA_DETECTOR)/ADSupport
 -include \$(TOP)/configure/RELEASE.local.\$(EPICS_HOST_ARCH)
 EOF
 
-# sscan
-cat <<EOF > sscan/configure/RELEASE
-EPICS_BASE=$PWD/epics-base
-EOF
-
 # Build support modules
 (cd areaDetector && make "$@")
-(cd sscan && make "$@")
