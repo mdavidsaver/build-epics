@@ -10,15 +10,10 @@ set -e -x
 # Run after the following scripts have been run:
 # - build-epics.sh
 # - build-exp-ctl-support.sh
-# - build-exp-ctl-support-ad.sh
 #
 
 # Clean up
 rm -rf iocs/scan iocs/scan7
-
-(cd areaDetector/ADSimDetector/iocs \
-  && make distclean \
-  )
 
 DEPTH="--depth 5"
 
@@ -54,23 +49,9 @@ EOF
 # Build scan IOC
 (cd iocs/scan7 && make "$@")
 
-# Build area detector simulator IOC
-(cd areaDetector/ADSimDetector \
-  && make "$@" \
-  )
-
-(cd areaDetector/ADSimDetector/iocs \
-  && make "$@" \
-  )
-
 # Create symbolic links in iocs directory for convenience
 mkdir -p iocs
 (cd iocs \
-  && ln -sfn ../areaDetector/ADSimDetector/iocs/simDetectorIOC \
   && ln -sfn ../motorsim
-)
-
-(cd iocs/simDetectorIOC/iocBoot/iocSimDetector \
-  && ln -sfn envPaths envPaths.linux \
 )
 
