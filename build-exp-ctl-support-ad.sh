@@ -1,6 +1,6 @@
 #!/bin/sh
 set -e -x
-# Build additional experiment control support modules.
+# Build area detector support modules. Uses EPICS 7.
 #
 # This script is _not_ incremental.
 # Each run starts by _deleting_ the output directories.
@@ -11,12 +11,10 @@ set -e -x
 #
 
 # Clean up
-rm -rf base3 areaDetector sscan 
+rm -rf areaDetector sscan
 
 # Get the support module code
 DEPTH="--depth 5"
-
-git clone $DEPTH --branch R3-14-12-7 https://github.com/epics-base/epics-base.git base3
 
 git clone $DEPTH --branch R3-2 https://github.com/areaDetector/areaDetector.git
 (cd areaDetector \
@@ -36,11 +34,7 @@ git clone $DEPTH --branch R3-2 https://github.com/areaDetector/areaDetector.git
   && git checkout R2-5 \
   )
 
-mkdir -p support
-git clone $DEPTH --branch R5-9 https://github.com/epics-modules/autosave.git support/autosave
-git clone $DEPTH --branch R3-7 https://github.com/epics-modules/calc.git support/calc
-
-git clone $DEPTH --branch R2-11-1 https://github.com/epics-modules/sscan.git support/sscan
+git clone $DEPTH --branch R2-11-1 https://github.com/epics-modules/sscan.git sscan
 
 # areaDetector
 ## Create config files
@@ -102,10 +96,9 @@ EOF
 
 # sscan
 cat <<EOF > sscan/configure/RELEASE
-EPICS_BASE=$PWD/base3
+EPICS_BASE=$PWD/epics-base
 EOF
 
 # Build support modules
-(cd base3 && make "$@")
-(cd support/sscan && make "$@")
 (cd areaDetector && make "$@")
+(cd sscan && make "$@")

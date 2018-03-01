@@ -7,11 +7,14 @@ set -e -x
 #
 # Additional script arguments are passed to 'make' (eg. '-j2')
 #
-# Requires that EPICS base has been built using: build-epics.sh
+# Run after the following scripts have been run:
+# - build-epics.sh
+# - build-exp-ctl-support.sh
+# - build-exp-ctl-support-ad.sh
 #
 
 # Clean up
-rm -rf iocs/scan
+rm -rf iocs/scan iocs/scan7
 
 (cd areaDetector/ADSimDetector/iocs \
   && make distclean \
@@ -19,7 +22,7 @@ rm -rf iocs/scan
 
 DEPTH="--depth 5"
 
-# Get scan IOC
+# Build scan IOC against EPICS Base 3
 git clone $DEPTH https://github.com/waynelewis/ioc_scan.git iocs/scan
 
 # Set up scan IOC RELEASE file
@@ -34,6 +37,22 @@ EOF
 
 # Build scan IOC
 (cd iocs/scan && make "$@")
+
+# Build scan IOC against EPICS Base 7
+git clone $DEPTH https://github.com/waynelewis/ioc_scan.git iocs/scan7
+
+# Set up scan IOC RELEASE file
+cat <<EOF > iocs/scan7/configure/RELEASE
+TEMPLATE_TOP=\$(EPICS_BASE)/templates/makeBaseApp/top
+SUPPORT=$PWD
+SSCAN=\$(SUPPORT)/sscan
+AUTOSAVE=\$(SUPPORT)/autosave
+CALC=\$(SUPPORT)/calc
+EPICS_BASE=$PWD/epics-base
+EOF
+
+# Build scan IOC
+(cd iocs/scan7 && make "$@")
 
 # Build area detector simulator IOC
 (cd areaDetector/ADSimDetector \

@@ -1,13 +1,11 @@
 #!/bin/sh
 set -e -x
-# Build additional experiment control support modules.
+# Build experiment control support modules using EPICS Base 3.
 #
 # This script is _not_ incremental.
 # Each run starts by _deleting_ the output directories.
 #
 # Additional script arguments are passed to 'make' (eg. '-j2')
-#
-# Requires EPICS base installation using: build-epics.sh
 #
 
 SUPPORT=support_tmp
