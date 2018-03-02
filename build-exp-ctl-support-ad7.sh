@@ -92,5 +92,11 @@ ADSUPPORT=\$(AREA_DETECTOR)/ADSupport
 -include \$(TOP)/configure/RELEASE.local.\$(EPICS_HOST_ARCH)
 EOF
 
+# Create symlinks for common files
+(cd areaDetector/ADCore/iocBoot \
+&& ln -sfn EXAMPLE_commonPlugins.cmd commonPlugins.cmd \
+&& ln -sfn EXAMPLE_commonPlugin_settings.req commonPlugin_settings.req \
+)
+
 # Build support modules
 (cd areaDetector && make "$@")
