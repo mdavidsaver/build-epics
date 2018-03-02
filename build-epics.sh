@@ -98,11 +98,8 @@ EOF
 (cd motor && make "$@")
 (cd motorsim && make "$@")
 
-(cd p4p && make "$@" nose PYTHON=python2)
-(cd p4p && make "$@" nose PYTHON=python2 sh OUTPUT=$PWD/setup.sh)
-(cd p4p && make clean)
-(cd p4p && make "$@" nose PYTHON=python3)
-(cd p4p && make clean)
+(cd p4p && make "$@" nose PYTHON=python)
+(cd p4p && make "$@" nose PYTHON=python sh OUTPUT=$PWD/setup.sh)
 
 . p4p/setup.sh
 
