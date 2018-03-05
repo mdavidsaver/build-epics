@@ -1,0 +1,69 @@
+
+record(calcout, "$(P)phase") {
+    field(SCAN, ".1 second")
+    field(INPA, "$(P)phase NPP")
+    field(INPB, "360")
+    field(INPC, "1")
+    field(CALC, "D:=A+C;E:=D>=B?D-B:D;E")
+    field(DOPT, "Use OCAL")
+    field(OCAL, "sin(E*PI/180)")
+    field(OUT , "$(P)sine PP")
+    field(EGU , "deg.")
+    field(PREC, "2")
+}
+
+record(ai, "$(P)sine") {
+    field(HOPR, "1")
+    field(LOPR, "-1")
+    field(HIGH, "0.9")
+    field(LOW , "-0.5")
+    field(HSV , "MAJOR")
+    field(LSV , "MINOR")
+    field(EGU , "ampl")
+    field(PREC, "4")
+}
+
+record(ao, "$(P)out") {
+    field(HOPR, "100")
+    field(LOPR, "0")
+    field(DRVH, "100")
+    field(HIGH, "100")
+    field(HSV , "INVALID")
+    field(IVOA, "Don't drive outputs")
+    field(DRVL, "0")
+    field(OUT , "$(P)in PP MSI")
+    field(EGU , "arb")
+    field(PREC, "2")
+}
+
+record(ai, "$(P)in") {
+    field(HOPR, "100")
+    field(LOPR, "0")
+    field(EGU , "arb")
+    field(PREC, "2")
+}
+
+record(mbbo, "$(P)sel") {
+    field(ZRST, "Zero")
+    field(ONST, "One")
+    field(TWST, "Two")
+    field(THST, "Three")
+}
+
+
+record(ao, "$(P)slow") {
+  field(FLNK, "$(P)slow2")
+  field(TPRO, "1")
+}
+
+record(calcout, "$(P)slow2") {
+  field(INPA, "$(P)slow NPP")
+  field(CALC, "A*2")
+  field(ODLY, "1")
+  field(OUT , "$(P)slow3 PP")
+  field(TPRO, "1")
+}
+
+record(ai, "$(P)slow3") {
+  field(TPRO, "1")
+}
