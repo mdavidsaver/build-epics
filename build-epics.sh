@@ -17,11 +17,7 @@ rm -rf epics-base calc recsync autosave busy asyn motor motorsim p4p masarServic
 
 DEPTH="--depth 5"
 
-git clone --branch core/master https://github.com/epics-base/epics-base.git
-(cd epics-base \
-  && git checkout R7.0.1.1-48-g57acac8fb \
-  && git submodule update --init --reference . \
-)
+git clone $DEPTH --recursive --branch 7.0 https://github.com/epics-base/epics-base.git
 git clone $DEPTH https://github.com/ChannelFinder/recsync.git
 git clone $DEPTH --branch R5-9 https://github.com/epics-modules/autosave.git
 git clone $DEPTH --branch R3-7 https://github.com/epics-modules/calc.git
