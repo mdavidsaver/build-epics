@@ -48,6 +48,7 @@ do_make() {
 do_module() {
     name="$1"
     shift
+    echo "Building module $name"
     (cd "$name" && do_make "$@")
     tar --exclude 'O.*' --exclude-vcs -rf $TAR $PREFIX/"$name"
 }
@@ -127,7 +128,7 @@ git describe --always --tags --abbrev=8 HEAD && git log -n1 >> build-info
 
 tar -cf $TAR $PREFIX/build-info
 
-do_module epics-base
+do_module epics-base -s
 do_module autosave
 do_module recsync/client
 do_module seq
