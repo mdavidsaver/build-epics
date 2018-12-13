@@ -35,7 +35,7 @@ pkg-config --exists libpcre || die "Need libpcre headers for stream"
 
 # git_fetch <name> <rev> <url>
 git_repo() {
-    [ -d "$1" ] || git clone --recursive --branch "$2" "$3" "$1"
+    [ -d "$1" ] || git clone --depth 5 --recursive --branch "$2" "$3" "$1"
     echo "=== $1" > $1.version
     echo "URL: $3" >> $1.version
     (cd "$1" && git describe --always --tags --abbrev=8 HEAD && git log -n1) >> $1.version
@@ -63,13 +63,17 @@ git_repo motor      R6-11        https://github.com/epics-modules/motor.git
 git_repo stream     R2-7-7b      https://github.com/epics-modules/stream.git
 git_repo seq        master       https://github.com/mdavidsaver/sequencer-mirror
 git_repo sscan      R2-11-1      https://github.com/epics-modules/sscan.git
-#git_repo etherip
-#git_repo modbus
+git_repo etherip    master       https://github.com/EPICSTools/ether_ip
+git_repo modbus     R2-11        https://github.com/epics-modules/modbus.git
 
 export EPICS_HOST_ARCH=`./epics-base/startup/EpicsHostArch`
 
 cat <<EOF >epics-base/configure/CONFIG_SITE.local
 CROSS_COMPILER_TARGET_ARCHS += \$(EPICS_HOST_ARCH)-debug
+
+# workaround for https://sourceware.org/bugzilla/show_bug.cgi?id=16936
+EXTRA_SHRLIBDIR_RPATH_LDFLAGS_ORIGIN_NO += \$(SHRLIB_SEARCH_DIRS:%=-Wl,-rpath-link,%)
+OP_SYS_LDFLAGS += \$(EXTRA_SHRLIBDIR_RPATH_LDFLAGS_\$(LINKER_USE_RPATH)_\$(STATIC_BUILD))
 EOF
 
 cat <<EOF >autosave/configure/RELEASE
@@ -88,7 +92,16 @@ cat <<EOF >asyn/configure/RELEASE
 EPICS_BASE=$BASEDIR/epics-base
 EOF
 
+cat <<EOF >etherip/configure/RELEASE
+EPICS_BASE=$BASEDIR/epics-base
+EOF
+
 cat <<EOF >busy/configure/RELEASE
+ASYN=$BASEDIR/asyn
+EPICS_BASE=$BASEDIR/epics-base
+EOF
+
+cat <<EOF >modbus/configure/RELEASE
 ASYN=$BASEDIR/asyn
 EPICS_BASE=$BASEDIR/epics-base
 EOF
@@ -106,6 +119,7 @@ EOF
 
 cat <<EOF >stream/configure/RELEASE
 SSCAN=$BASEDIR/sscan
+SNCSEQ=$BASEDIR/seq
 CALC=$BASEDIR/calc
 ASYN=$BASEDIR/asyn
 EPICS_BASE=$BASEDIR/epics-base
@@ -126,7 +140,7 @@ ln -s . $PREFIX
 git remote show origin -n > build-info
 git describe --always --tags --abbrev=8 HEAD && git log -n1 >> build-info
 
-tar -cf $TAR $PREFIX/build-info
+tar -cf $TAR $PREFIX/build-info $PREFIX/prepare.sh $PREFIX/README.md
 
 do_module epics-base -s
 do_module autosave
@@ -138,8 +152,11 @@ do_module sscan
 do_module calc
 do_module stream BUILD_PCRE=NO
 do_module motor
+do_module etherip
+do_module modbus
 
 tar -rf $TAR $PREFIX/*.version
 
 gzip -f $TAR
-ls -lh $TAR
+gzip -l $TAR.*
+ls -lh $TAR.*
