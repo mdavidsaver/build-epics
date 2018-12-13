@@ -5,11 +5,14 @@ set -e -x
 # Required Debian packages to build
 #  build-essential
 #  libreadline6-dev libncurses5-dev perl
+#  libpcre3-dev
 #  python-dev python-nose python-numpy
 #  python3-dev python3-nose python3-numpy
 #
 # Required RHEL/CentOS
 #  gcc-c++ glibc-devel make readline-devel ncurses-devel
+#  perl-devel
+#  pkg-config pcre-devel
 #  python-devel numpy python-nose
 # From EPEL
 #  re2c
@@ -54,11 +57,11 @@ git_repo recsync    master       https://github.com/ChannelFinder/recsync.git
 git_repo autosave   R5-9         https://github.com/epics-modules/autosave.git
 git_repo calc       R3-7         https://github.com/epics-modules/calc.git
 git_repo busy       R1-7         https://github.com/epics-modules/busy.git
-git_repo asyn       R4-33        https://github.com/epics-modules/asyn.git
-git_repo motor      master       https://github.com/epics-modules/motor.git
-git_repo stream     master       https://github.com/epics-modules/stream.git
-git_repo seq        master       https://github.com/epicsdeb/seq.git
-git_repo sscan      master       https://github.com/epics-modules/sscan.git
+git_repo asyn       R4-34        https://github.com/epics-modules/asyn.git
+git_repo motor      R6-11        https://github.com/epics-modules/motor.git
+git_repo stream     R2-7-7b      https://github.com/epics-modules/stream.git
+git_repo seq        R2-2-6       http://www-csr.bessy.de/control/SoftDist/sequencer/repo/branch-2-2.git
+git_repo sscan      R2-11-1      https://github.com/epics-modules/sscan.git
 #git_repo etherip
 #git_repo modbus
 
@@ -114,8 +117,10 @@ SNCSEQ=$BASEDIR/seq
 EPICS_BASE=$BASEDIR/epics-base
 EOF
 
+trap 'rm -f $PREFIX $TAR' TERM KILL HUP EXIT
+
+rm -f $PREFIX
 ln -s . $PREFIX
-trap 'rm $PREFIX' TERM KILL HUP EXIT
 
 git remote show origin -n > build-info
 git describe --always --tags --abbrev=8 HEAD && git log -n1 >> build-info
@@ -133,6 +138,7 @@ do_module calc
 do_module stream BUILD_PCRE=NO
 do_module motor
 
-# calc <- sscan, seq
+tar -rf $TAR $PREFIX/*.version
 
-gzip $TAR
+gzip -f $TAR
+ls -lh $TAR
