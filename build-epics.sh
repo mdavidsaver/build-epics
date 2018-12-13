@@ -61,7 +61,7 @@ git_repo busy       R1-7         https://github.com/epics-modules/busy.git
 git_repo asyn       R4-34        https://github.com/epics-modules/asyn.git
 git_repo motor      R6-11        https://github.com/epics-modules/motor.git
 git_repo stream     R2-7-7b      https://github.com/epics-modules/stream.git
-git_repo seq        R2-2-6       http://www-csr.bessy.de/control/SoftDist/sequencer/repo/branch-2-2.git
+git_repo seq        master       https://github.com/mdavidsaver/sequencer-mirror
 git_repo sscan      R2-11-1      https://github.com/epics-modules/sscan.git
 #git_repo etherip
 #git_repo modbus
