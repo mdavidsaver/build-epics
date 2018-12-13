@@ -140,7 +140,7 @@ ln -s . $PREFIX
 git remote show origin -n > build-info
 git describe --always --tags --abbrev=8 HEAD && git log -n1 >> build-info
 
-tar -cf $TAR $PREFIX/build-info $PREFIX/prepare.sh $PREFIX/README.md
+tar -cf $TAR $PREFIX/build-info $PREFIX/prepare.sh $PREFIX/README.md $PREFIX/demo.db $PREFIX/build-epics.sh
 
 do_module epics-base -s
 do_module autosave

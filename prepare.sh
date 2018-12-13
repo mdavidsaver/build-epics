@@ -20,5 +20,6 @@ export PATH=$BASEDIR/epics-base/bin/\$EPICS_HOST_ARCH:\$PATH
 edeactivate() {
     PATH="\$_OLD_EPICS_PATH"
     unset _OLD_EPICS_PATH
+    unset edeactivate
 }
 EOF
