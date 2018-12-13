@@ -11,12 +11,14 @@ set -e -x
 # Required RHEL/CentOS
 #  gcc-c++ glibc-devel make readline-devel ncurses-devel
 #  python-devel numpy python-nose
+# From EPEL
+#  re2c
 
 BASEDIR="$PWD"
 PREFIX=epics-`uname -m`-`date +%Y%m%d`
 TAR=$PREFIX.tar
 
-PMAKE="-j8"
+PMAKE="$@"
 
 die() {
     echo "$1" >&1
@@ -25,7 +27,7 @@ die() {
 
 perl --version || die "Missing perl"
 g++ --version || die "Missing gcc/g++"
-re2c --version || die "Need re2c for sncseq"
+type re2c || die "Need re2c for sncseq"
 pkg-config --exists libpcre || die "Need libpcre headers for stream"
 
 # git_fetch <name> <rev> <url>

@@ -9,7 +9,8 @@ addons:
     - libreadline6-dev
     - libncurses5-dev
     - perl
+    - re2c
     - python-dev
     - python-nose
     - python-numpy
-script: sh build-all.sh -sj2 </dev/null
+script: sh build-epics.sh -sj2 </dev/null
