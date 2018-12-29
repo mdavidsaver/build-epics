@@ -13,4 +13,6 @@ addons:
     - python-dev
     - python-nose
     - python-numpy
-script: travis_wait 30 sh build-epics.sh -j2 </dev/null
+script:
+  - travis_wait 30 sh build-epics.sh -j2 </dev/null
+  - ./build-testapp.sh

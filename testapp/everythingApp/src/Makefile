@@ -14,12 +14,38 @@ DBD += everything.dbd
 
 # everything.dbd will be made up from these files:
 everything_DBD += base.dbd
+everything_DBD += asSupport.dbd
+everything_DBD += asyn.dbd
+everything_DBD += reccaster.dbd
+everything_DBD += ether_ip.dbd
+
+everything_DBD += busySupport.dbd
+everything_DBD += calcSupport.dbd
+everything_DBD += modbusSupport.dbd
+everything_DBD += sscanSupport.dbd
+everything_DBD += stream.dbd
+everything_DBD += motorSupport.dbd
+everything_DBD += devNewFocus.dbd
 
 # Include dbd files from all support applications:
 #everything_DBD += xxx.dbd
 
 # Add all the support libraries needed by this IOC
-#everything_LIBS += xxx
+everything_LIBS += NewFocus
+everything_LIBS += motor
+everything_LIBS += stream
+everything_LIBS += sscan
+everything_LIBS += modbus
+everything_LIBS += calc
+everything_LIBS += busy
+
+everything_LIBS += seq pv
+everything_LIBS += ether_ip
+everything_LIBS += reccaster
+everything_LIBS += asyn
+everything_LIBS += autosave
+
+everything_SYS_LIBS += pcre
 
 # everything_registerRecordDeviceDriver.cpp derives from everything.dbd
 everything_SRCS += everything_registerRecordDeviceDriver.cpp

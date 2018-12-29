@@ -49,6 +49,7 @@ do_module() {
     name="$1"
     shift
     echo "Building module $name"
+    cat "$name"/configure/RELEASE
     (cd "$name" && do_make "$@")
     tar --exclude 'O.*' --exclude-vcs -rf $TAR $PREFIX/"$name"
 }
