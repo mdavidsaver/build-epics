@@ -7,6 +7,18 @@ BASEDIR="$(dirname "$IAM")"
 
 export EPICS_HOST_ARCH="$("$BASEDIR"/epics-base/startup/EpicsHostArch)"
 
+# adjust RELEASE paths
+for ff in "$BASEDIR"/*/configure/RELEASE "$BASEDIR"/*/*/configure/RELEASE
+do
+  echo "Adjust $ff"
+  sed -i -e '/EPICS_BASE=/d' "$ff"
+  cat <<EOF >> "$ff"
+EPICS_BASE=$BASEDIR/epics-base
+EOF
+done
+
+echo "Create $BASEDIR/eactivate"
+
 cat <<EOF > "$BASEDIR"/eactivate
 # source me to enable
 
@@ -23,3 +35,6 @@ edeactivate() {
     unset edeactivate
 }
 EOF
+
+echo "To begin using run:"
+echo ". $BASEDIR/eactivate"

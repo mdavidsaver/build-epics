@@ -97,38 +97,38 @@ EPICS_BASE=$BASEDIR/epics-base
 EOF
 
 cat <<EOF >busy/configure/RELEASE
-ASYN=$BASEDIR/asyn
+ASYN=\$(EPICS_BASE)/../asyn
 EPICS_BASE=$BASEDIR/epics-base
 EOF
 
 cat <<EOF >modbus/configure/RELEASE
-ASYN=$BASEDIR/asyn
+ASYN=\$(EPICS_BASE)/../asyn
 EPICS_BASE=$BASEDIR/epics-base
 EOF
 
 cat <<EOF >sscan/configure/RELEASE
-SNCSEQ=$BASEDIR/seq
+SNCSEQ=\$(EPICS_BASE)/../seq
 EPICS_BASE=$BASEDIR/epics-base
 EOF
 
 cat <<EOF >calc/configure/RELEASE
-SSCAN=$BASEDIR/sscan
-SNCSEQ=$BASEDIR/seq
+SSCAN=\$(EPICS_BASE)/../sscan
+SNCSEQ=\$(EPICS_BASE)/../seq
 EPICS_BASE=$BASEDIR/epics-base
 EOF
 
 cat <<EOF >stream/configure/RELEASE
-SSCAN=$BASEDIR/sscan
-SNCSEQ=$BASEDIR/seq
-CALC=$BASEDIR/calc
-ASYN=$BASEDIR/asyn
+SSCAN=\$(EPICS_BASE)/../sscan
+SNCSEQ=\$(EPICS_BASE)/../seq
+CALC=\$(EPICS_BASE)/../calc
+ASYN=\$(EPICS_BASE)/../asyn
 EPICS_BASE=$BASEDIR/epics-base
 EOF
 
 cat <<EOF >motor/configure/RELEASE
-ASYN=$BASEDIR/asyn
-BUSY=$BASEDIR/busy
-SNCSEQ=$BASEDIR/seq
+ASYN=\$(EPICS_BASE)/../asyn
+BUSY=\$(EPICS_BASE)/../busy
+SNCSEQ=\$(EPICS_BASE)/../seq
 EPICS_BASE=$BASEDIR/epics-base
 EOF
 
