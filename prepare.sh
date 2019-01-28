@@ -36,5 +36,18 @@ edeactivate() {
 }
 EOF
 
-echo "To begin using run:"
-echo ". $BASEDIR/eactivate"
+chmod -R a-w "$BASEDIR"
+
+cat <<EOF
+System package dependencies
+
+  # Debian
+  apt-get install build-essential libreadline6-dev libncurses5-dev perl libpcre3-dev re2c
+
+  # RHEL/CentOS  w/ EPEL
+  yum install gcc-c++ glibc-devel make readline-devel ncurses-devel perl-devel \\
+   pkg-config pcre-devel re2c
+
+To begin using run:
+. $BASEDIR/eactivate
+EOF

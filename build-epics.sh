@@ -8,6 +8,7 @@ set -e -x
 #  libpcre3-dev
 #  python-dev python-nose python-numpy
 #  python3-dev python3-nose python3-numpy
+#  re2c
 #
 # Required RHEL/CentOS
 #  gcc-c++ glibc-devel make readline-devel ncurses-devel
