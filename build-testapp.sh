@@ -4,7 +4,7 @@ set -e -x
 mkdir root
 ROOTDIR="$PWD/root"
 
-trap 'rm -rf "$ROOTDIR"' TERM KILL HUP EXIT
+trap 'chmod -R u+w "$ROOTDIR" && rm -rf "$ROOTDIR"' TERM KILL HUP EXIT
 
 tar -C "$ROOTDIR" -xaf epics-*.tar.*
 
