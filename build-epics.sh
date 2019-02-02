@@ -9,7 +9,7 @@ set -e -x
 #  python-dev python-nose python-numpy
 #  python3-dev python3-nose python3-numpy
 #  re2c
-#  libgraphicsmagick++-dev libaec-dev libhdf5-dev libjpeg-dev libnetcdf-dev libtiff-dev libz-dev
+#  libgraphicsmagick++-dev libaec-dev libhdf5-dev libaec-devel libjpeg-dev libnetcdf-dev libtiff-dev libz-dev
 #
 # Required RHEL/CentOS
 #  gcc-c++ glibc-devel make readline-devel ncurses-devel
@@ -18,7 +18,7 @@ set -e -x
 #  python-devel numpy python-nose
 # From EPEL
 #  re2c
-#  blosc-devel GraphicsMagick-c++-devel hdf5-devel netcdf-devel
+#  blosc-devel GraphicsMagick-c++-devel hdf5-devel libaec-devel netcdf-devel
 
 BASEDIR="$PWD"
 PREFIX=epics-`uname -m`-`date +%Y%m%d`
@@ -146,7 +146,9 @@ then
   HDF5_LDFLAGS=`pkg-config hdf5-serial --libs-only-L`
 fi
 
-cat <<EOF >areaDetector/configure/CONFIG_SITE.local
+install -d areaDetector/ADCore/cfg
+
+cat <<EOF >areaDetector/ADCore/cfg/CONFIG_ADCORE_MODULE
 XML2_INCLUDE = /usr/include/libxml2
 GRAPHICSMAGICK_INCLUDE = /usr/include/GraphicsMagick
 HDF5_INCLUDE = /usr/include/hdf5/serial
@@ -171,10 +173,10 @@ WITH_NETCDF = YES
 # (not in EPEL)
 WITH_NEXUS = NO
 # libopencv-dev
-# (not in EPEL)
+# opencv-devel
 WITH_OPENCV = NO
 # libaec-dev
-# ??? EPEL
+# libaec-devel
 WITH_SZIP = YES
 # libtiff-dev
 WITH_TIFF = YES
@@ -189,7 +191,6 @@ EOF
 
 cat <<EOF >areaDetector/ADCore/configure/CONFIG_SITE
 CHECK_RELEASE = YES
-include \$(TOP)/../configure/CONFIG_SITE.local
 EOF
 
 cat <<EOF >areaDetector/ADSimDetector/configure/RELEASE
@@ -200,7 +201,6 @@ EOF
 
 cat <<EOF >areaDetector/ADSimDetector/configure/CONFIG_SITE
 CHECK_RELEASE = YES
-include \$(TOP)/../configure/CONFIG_SITE.local
 EOF
 
 cat <<EOF >areaDetector/ADURL/configure/RELEASE
@@ -211,7 +211,6 @@ EOF
 
 cat <<EOF >areaDetector/ADURL/configure/CONFIG_SITE
 CHECK_RELEASE = YES
-include \$(TOP)/../configure/CONFIG_SITE.local
 EOF
 
 trap 'rm -f $PREFIX $TAR' TERM KILL HUP EXIT
