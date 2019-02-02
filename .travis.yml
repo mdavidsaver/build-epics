@@ -13,6 +13,13 @@ addons:
     - python-dev
     - python-nose
     - python-numpy
+    - libgraphicsmagick++-dev
+    - libhdf5-dev
+    - libaec-dev
+    - libjpeg-dev
+    - libnetcdf-dev
+    - libtiff-dev
+    - libz-dev
 script:
   - travis_wait 30 sh build-epics.sh -j2 </dev/null
   - ./build-testapp.sh

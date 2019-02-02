@@ -9,6 +9,7 @@ set -e -x
 #  python-dev python-nose python-numpy
 #  python3-dev python3-nose python3-numpy
 #  re2c
+#  libgraphicsmagick++-dev libaec-dev libhdf5-dev libjpeg-dev libnetcdf-dev libtiff-dev libz-dev
 #
 # Required RHEL/CentOS
 #  gcc-c++ glibc-devel make readline-devel ncurses-devel
@@ -17,6 +18,7 @@ set -e -x
 #  python-devel numpy python-nose
 # From EPEL
 #  re2c
+#  blosc-devel GraphicsMagick-c++-devel hdf5-devel netcdf-devel
 
 BASEDIR="$PWD"
 PREFIX=epics-`uname -m`-`date +%Y%m%d`
@@ -67,6 +69,11 @@ git_repo seq        master       https://github.com/mdavidsaver/sequencer-mirror
 git_repo sscan      R2-11-1      https://github.com/epics-modules/sscan.git
 git_repo etherip    master       https://github.com/EPICSTools/ether_ip
 git_repo modbus     R2-11        https://github.com/epics-modules/modbus.git
+git_repo areaDetector R3-4       https://github.com/areaDetector/areaDetector.git
+
+(cd areaDetector && \
+ git submodule init ADCore ADSimDetector ADURL && \
+ git submodule update )
 
 export EPICS_HOST_ARCH=`./epics-base/startup/EpicsHostArch`
 
@@ -134,6 +141,79 @@ SNCSEQ=\$(EPICS_BASE)/../seq
 EPICS_BASE=$BASEDIR/epics-base
 EOF
 
+if pkg-config --exists hdf5-serial
+then
+  HDF5_LDFLAGS=`pkg-config hdf5-serial --libs-only-L`
+fi
+
+cat <<EOF >areaDetector/configure/CONFIG_SITE.local
+XML2_INCLUDE = /usr/include/libxml2
+GRAPHICSMAGICK_INCLUDE = /usr/include/GraphicsMagick
+HDF5_INCLUDE = /usr/include/hdf5/serial
+USR_LDFLAGS += $HDF5_LDFLAGS
+WITH_PVA  = YES
+WITH_QSRV = YES
+# libblosc-dev
+# blosc-devel
+WITH_BLOSC = NO
+# libgraphicsmagick++-dev
+# GraphicsMagick-c++-devel
+WITH_GRAPHICSMAGICK = YES
+# libhdf5-dev
+# hdf5-devel
+WITH_HDF5 = YES
+# libjpeg-dev
+WITH_JPEG = YES
+# libnetcdf-dev
+# netcdf-devel
+WITH_NETCDF = YES
+# libnexus0-dev
+# (not in EPEL)
+WITH_NEXUS = NO
+# libopencv-dev
+# (not in EPEL)
+WITH_OPENCV = NO
+# libaec-dev
+# ??? EPEL
+WITH_SZIP = YES
+# libtiff-dev
+WITH_TIFF = YES
+# libz-dev
+WITH_ZLIB = YES
+EOF
+
+cat <<EOF >areaDetector/ADCore/configure/RELEASE
+ASYN=\$(EPICS_BASE)/../asyn
+EPICS_BASE=$BASEDIR/epics-base
+EOF
+
+cat <<EOF >areaDetector/ADCore/configure/CONFIG_SITE
+CHECK_RELEASE = YES
+include \$(TOP)/../configure/CONFIG_SITE.local
+EOF
+
+cat <<EOF >areaDetector/ADSimDetector/configure/RELEASE
+ADCORE=\$(EPICS_BASE)/../areaDetector/ADCore
+ASYN=\$(EPICS_BASE)/../asyn
+EPICS_BASE=$BASEDIR/epics-base
+EOF
+
+cat <<EOF >areaDetector/ADSimDetector/configure/CONFIG_SITE
+CHECK_RELEASE = YES
+include \$(TOP)/../configure/CONFIG_SITE.local
+EOF
+
+cat <<EOF >areaDetector/ADURL/configure/RELEASE
+ADCORE=\$(EPICS_BASE)/../areaDetector/ADCore
+ASYN=\$(EPICS_BASE)/../asyn
+EPICS_BASE=$BASEDIR/epics-base
+EOF
+
+cat <<EOF >areaDetector/ADURL/configure/CONFIG_SITE
+CHECK_RELEASE = YES
+include \$(TOP)/../configure/CONFIG_SITE.local
+EOF
+
 trap 'rm -f $PREFIX $TAR' TERM KILL HUP EXIT
 
 rm -f $PREFIX
@@ -156,6 +236,9 @@ do_module stream BUILD_PCRE=NO
 do_module motor
 do_module etherip
 do_module modbus
+do_module areaDetector/ADCore
+do_module areaDetector/ADSimDetector
+do_module areaDetector/ADURL
 
 tar -rf $TAR $PREFIX/*.version
 
