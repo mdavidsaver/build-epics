@@ -75,6 +75,10 @@ git_repo areaDetector R3-4       https://github.com/areaDetector/areaDetector.gi
  git submodule init ADCore ADSimDetector ADURL && \
  git submodule update )
 
+# get fix issue with ADCore 3.4
+#  Removed DTYP from MaxArrayRate_RBV calc record, not valid
+(cd areaDetector/ADCore && git checkout 4657f1b4b5765bb27a6cc842136cf961b95661e7)
+
 export EPICS_HOST_ARCH=`./epics-base/startup/EpicsHostArch`
 
 cat <<EOF >epics-base/configure/CONFIG_SITE.local
