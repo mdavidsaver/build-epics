@@ -62,6 +62,7 @@ everything_SRCS_vxWorks += -nil-
 # Finally link to the EPICS Base libraries
 everything_LIBS += $(EPICS_BASE_IOC_LIBS)
 
+DBD_NAME = everything
 include $(ADCORE)/cfg/commonDriverMakefile
 
 #===========================
