@@ -26,11 +26,13 @@ everything_DBD += sscanSupport.dbd
 everything_DBD += stream.dbd
 everything_DBD += motorSupport.dbd
 everything_DBD += devNewFocus.dbd
+everything_DBD += simDetectorSupport.dbd
 
 # Include dbd files from all support applications:
 #everything_DBD += xxx.dbd
 
 # Add all the support libraries needed by this IOC
+everything_LIBS += simDetector
 everything_LIBS += NewFocus
 everything_LIBS += motor
 everything_LIBS += stream
@@ -59,6 +61,8 @@ everything_SRCS_vxWorks += -nil-
 
 # Finally link to the EPICS Base libraries
 everything_LIBS += $(EPICS_BASE_IOC_LIBS)
+
+include $(ADCORE)/cfg/commonDriverMakefile
 
 #===========================
 

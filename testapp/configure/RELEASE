@@ -1,3 +1,6 @@
+ADCORE=$(EPICS_BASE)/../areaDetector/ADCore
+ADSIMDETECTOR=$(EPICS_BASE)/../areaDetector/ADSimDetector
+ADURL=$(EPICS_BASE)/../areaDetector/ADURL
 AUTOSAVE=$(EPICS_BASE)/../autosave
 ASYN=$(EPICS_BASE)/../asyn
 BUSY=$(EPICS_BASE)/../busy
