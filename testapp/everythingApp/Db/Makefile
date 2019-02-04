@@ -24,6 +24,7 @@ DB_INSTALLS += $(ADCORE)/db/NDFile.template
 DB_INSTALLS += $(ADCORE)/db/NDPluginBase.template
 
 DB_INSTALLS += $(ADSIMDETECTOR)/db/simDetector.template
+DB_INSTALLS += $(ADURL)/db/URLDriver.template
 
 include $(TOP)/configure/RULES
 #----------------------------------------

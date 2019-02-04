@@ -27,12 +27,14 @@ everything_DBD += stream.dbd
 everything_DBD += motorSupport.dbd
 everything_DBD += devNewFocus.dbd
 everything_DBD += simDetectorSupport.dbd
+everything_DBD += URLDriverSupport.dbd
 
 # Include dbd files from all support applications:
 #everything_DBD += xxx.dbd
 
 # Add all the support libraries needed by this IOC
 everything_LIBS += simDetector
+everything_LIBS += URLDriver
 everything_LIBS += NewFocus
 everything_LIBS += motor
 everything_LIBS += stream

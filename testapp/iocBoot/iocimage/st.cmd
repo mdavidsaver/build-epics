@@ -18,10 +18,18 @@ epicsEnvSet("NCHANS", "1024")
 dbLoadDatabase("../../dbd/everything.dbd",0,0)
 everything_registerRecordDeviceDriver(pdbbase) 
 
-epicsEnvSet("EPICS_DB_INCLUDE_PATH", "../../db")
+epicsEnvSet("EPICS_DB_INCLUDE_PATH", "../../db:.")
 
+### Simulation
 simDetectorConfig("$(PORT)", $(XSIZE), $(YSIZE), 1, 0, 0)
 dbLoadRecords("simDetector.template","P=$(PREFIX),R=cam1:,PORT=$(PORT),ADDR=0,TIMEOUT=1")
+###
+
+### URL
+#URLDriverConfig("$(PORT)", 0, 0)
+#dbLoadRecords("URLDriver.template","P=$(PREFIX),R=cam1:,PORT=$(PORT),ADDR=0,TIMEOUT=1")
+###
+
 
 # Create an HDF5 file saving plugin
 NDFileHDF5Configure("FileHDF1", $(QSIZE), 0, "$(PORT)", 0)
@@ -118,3 +126,7 @@ dbLoadRecords("NDPva.template",  "P=$(PREFIX),R=Pva1:, PORT=PVA1,ADDR=0,TIMEOUT=
 
 
 iocInit()
+
+
+
+dbpf testcam:Pva1:EnableCallbacks 1
