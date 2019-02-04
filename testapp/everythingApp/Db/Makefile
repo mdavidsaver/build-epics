@@ -25,6 +25,7 @@ DB_INSTALLS += $(ADCORE)/db/NDPluginBase.template
 
 DB_INSTALLS += $(ADSIMDETECTOR)/db/simDetector.template
 DB_INSTALLS += $(ADURL)/db/URLDriver.template
+DB_INSTALLS += $(ADPVADRIVER)/db/pvaDriver.template
 
 include $(TOP)/configure/RULES
 #----------------------------------------

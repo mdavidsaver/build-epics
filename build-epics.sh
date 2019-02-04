@@ -197,25 +197,19 @@ cat <<EOF >areaDetector/ADCore/configure/CONFIG_SITE
 CHECK_RELEASE = YES
 EOF
 
-cat <<EOF >areaDetector/ADSimDetector/configure/RELEASE
+for mod in ADSimDetector ADURL pvaDriver
+do
+    cat <<EOF >areaDetector/$mod/configure/RELEASE
 ADCORE=\$(EPICS_BASE)/../areaDetector/ADCore
 ASYN=\$(EPICS_BASE)/../asyn
 EPICS_BASE=$BASEDIR/epics-base
 EOF
 
-cat <<EOF >areaDetector/ADSimDetector/configure/CONFIG_SITE
+    cat <<EOF >areaDetector/$mod/configure/CONFIG_SITE
 CHECK_RELEASE = YES
 EOF
 
-cat <<EOF >areaDetector/ADURL/configure/RELEASE
-ADCORE=\$(EPICS_BASE)/../areaDetector/ADCore
-ASYN=\$(EPICS_BASE)/../asyn
-EPICS_BASE=$BASEDIR/epics-base
-EOF
-
-cat <<EOF >areaDetector/ADURL/configure/CONFIG_SITE
-CHECK_RELEASE = YES
-EOF
+done
 
 trap 'rm -f $PREFIX $TAR' TERM KILL HUP EXIT
 
@@ -242,6 +236,7 @@ do_module modbus
 do_module areaDetector/ADCore
 do_module areaDetector/ADSimDetector
 do_module areaDetector/ADURL
+do_module areaDetector/pvaDriver
 
 tar -rf $TAR $PREFIX/*.version
 
