@@ -30,6 +30,11 @@ dbLoadRecords("simDetector.template","P=$(PREFIX),R=cam1:,PORT=$(PORT),ADDR=0,TI
 #dbLoadRecords("URLDriver.template","P=$(PREFIX),R=cam1:,PORT=$(PORT),ADDR=0,TIMEOUT=1")
 ###
 
+### pvaDriver
+#pvaDriverConfig("$(PORT)", "$(PVNAME=face)", 0, 0, 0, 0)
+#dbLoadRecords("pvaDriver.template","P=$(PREFIX),R=cam1:,PORT=$(PORT),ADDR=0,TIMEOUT=1")
+###
+
 
 # Create an HDF5 file saving plugin
 NDFileHDF5Configure("FileHDF1", $(QSIZE), 0, "$(PORT)", 0)
@@ -130,3 +135,4 @@ iocInit()
 
 
 dbpf testcam:Pva1:EnableCallbacks 1
+dbpf testcam:cam1:AcquirePeriod 1

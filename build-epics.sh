@@ -6,8 +6,6 @@ set -e -x
 #  build-essential
 #  libreadline6-dev libncurses5-dev perl
 #  libpcre3-dev
-#  python-dev python-nose python-numpy
-#  python3-dev python3-nose python3-numpy
 #  re2c
 #  libgraphicsmagick++-dev libaec-dev libhdf5-dev libaec-devel libjpeg-dev libnetcdf-dev libtiff-dev libz-dev
 #
@@ -15,10 +13,9 @@ set -e -x
 #  gcc-c++ glibc-devel make readline-devel ncurses-devel
 #  perl-devel
 #  pkg-config pcre-devel
-#  python-devel numpy python-nose
 # From EPEL
 #  re2c
-#  blosc-devel GraphicsMagick-c++-devel hdf5-devel libaec-devel netcdf-devel
+#  GraphicsMagick-c++-devel hdf5-devel libaec-devel netcdf-devel
 
 BASEDIR="$PWD"
 PREFIX=epics-`uname -m`-`date +%Y%m%d`
@@ -70,10 +67,6 @@ git_repo sscan      R2-11-1      https://github.com/epics-modules/sscan.git
 git_repo etherip    master       https://github.com/EPICSTools/ether_ip
 git_repo modbus     R2-11        https://github.com/epics-modules/modbus.git
 git_repo areaDetector R3-4       https://github.com/areaDetector/areaDetector.git
-
-(cd areaDetector && \
- git submodule init ADCore ADSimDetector ADURL && \
- git submodule update )
 
 # get fix issue with ADCore 3.4
 #  Removed DTYP from MaxArrayRate_RBV calc record, not valid

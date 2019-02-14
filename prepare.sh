@@ -42,11 +42,14 @@ cat <<EOF
 System package dependencies
 
   # Debian
-  apt-get install build-essential libreadline6-dev libncurses5-dev perl libpcre3-dev re2c
+  apt-get install build-essential libreadline6-dev libncurses5-dev perl libpcre3-dev re2c \\
+   libgraphicsmagick++-dev libaec-dev libhdf5-dev libaec-devel libjpeg-dev libnetcdf-dev \\
+   libtiff-dev libz-dev
 
   # RHEL/CentOS  w/ EPEL
   yum install gcc-c++ glibc-devel make readline-devel ncurses-devel perl-devel \\
-   pkg-config pcre-devel re2c
+   pkg-config pcre-devel re2c GraphicsMagick-c++-devel hdf5-devel libaec-devel \\
+   netcdf-devel
 
 To begin using run:
 . $BASEDIR/eactivate
