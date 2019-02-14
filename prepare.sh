@@ -5,6 +5,12 @@ IAM="$(readlink -f "$0")"
 
 BASEDIR="$(dirname "$IAM")"
 
+if [ ! -f "$BASEDIR"/epics-base/startup/EpicsHostArch -a "$BASEDIR"/build-epics.sh ]
+then
+  echo "Need to run ./build-epics.sh first"
+  exit 1
+fi
+
 export EPICS_HOST_ARCH="$("$BASEDIR"/epics-base/startup/EpicsHostArch)"
 
 # adjust RELEASE paths
