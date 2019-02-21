@@ -131,6 +131,24 @@ dbLoadRecords("NDCodec.template", "P=$(PREFIX), R=Codec2:, PORT=CODEC2, ADDR=0, 
 NDPvaConfigure("PVA1", $(QSIZE), 0, "$(PORT)", 0, $(PREFIX)Pva1:Image, 0, 0, 0)
 dbLoadRecords("NDPva.template",  "P=$(PREFIX),R=Pva1:, PORT=PVA1,ADDR=0,TIMEOUT=1,NDARRAY_PORT=$(PORT)")
 
+## autosave/restore machinery
+save_restoreSet_Debug(0)
+save_restoreSet_IncompleteSetsOk(1)
+save_restoreSet_DatedBackupFiles(1)
+
+set_savefile_path("${TOP}/autosave","/save")
+set_requestfile_path("${TOP}/autosave","/req")
+
+system("install -m 777 -d ${TOP}/autosave/save")
+system("install -m 777 -d ${TOP}/autosave/req")
+
+set_pass0_restoreFile("info_positions.sav")
+set_pass0_restoreFile("info_settings.sav")
+set_pass1_restoreFile("info_settings.sav")
+
+dbLoadRecords("save_restoreStatus.db","P=$(PREFIX)")
+save_restoreSet_status_prefix("$(PREFIX)")
+
 # Load motors
 cd $(TOP)
 dbLoadTemplate("db/motorSim.substitutions")
@@ -148,6 +166,14 @@ motorSimConfigAxis("motorSim1", 4, 20000, -20000, 500, 0)
 motorSimConfigAxis("motorSim1", 5, 20000, -20000, 500, 0)
 
 iocInit()
+
+## more autosave/restore machinery
+cd $(TOP)/autosave/req
+makeAutosaveFiles()
+create_monitor_set("info_positions.req", 5 , "")
+create_monitor_set("info_settings.req", 15 , "")
+
+cd $(TOP)
 
 dbpf testcam:Pva1:EnableCallbacks 1
 dbpf testcam:cam1:AcquirePeriod 1
