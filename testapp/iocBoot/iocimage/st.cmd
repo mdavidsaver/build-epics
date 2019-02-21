@@ -1,5 +1,7 @@
 #!../../bin/linux-x86_64/everything
 
+< envPaths
+
 # $(PREFIX)      Prefix for all records
 # $(PORT)        The port name for the detector.  In autosave.
 # $(QSIZE)       The queue size for all plugins.  In autosave.
@@ -129,10 +131,23 @@ dbLoadRecords("NDCodec.template", "P=$(PREFIX), R=Codec2:, PORT=CODEC2, ADDR=0, 
 NDPvaConfigure("PVA1", $(QSIZE), 0, "$(PORT)", 0, $(PREFIX)Pva1:Image, 0, 0, 0)
 dbLoadRecords("NDPva.template",  "P=$(PREFIX),R=Pva1:, PORT=PVA1,ADDR=0,TIMEOUT=1,NDARRAY_PORT=$(PORT)")
 
+# Load motors
+cd $(TOP)
+dbLoadTemplate("db/motorSim.substitutions")
+
+# Create simulated motors: ( start card , start axis , low limit, high limit, home posn, # cards, # axes to setup)
+#motorSimCreate( 0, 0, -32000, 32000, 0, 1, 6 )
+motorSimCreateController("motorSim1", 6)
+# Setup the Asyn layer (portname, low-level driver drvet name, card, number of axes on card)
+#drvAsynMotorConfigure("motorSim1", "motorSim", 0, 6)
+motorSimConfigAxis("motorSim1", 0, 20000, -20000, 500, 0)
+motorSimConfigAxis("motorSim1", 1, 20000, -20000, 500, 0)
+motorSimConfigAxis("motorSim1", 2, 20000, -20000, 500, 0)
+motorSimConfigAxis("motorSim1", 3, 20000, -20000, 500, 0)
+motorSimConfigAxis("motorSim1", 4, 20000, -20000, 500, 0)
+motorSimConfigAxis("motorSim1", 5, 20000, -20000, 500, 0)
 
 iocInit()
-
-
 
 dbpf testcam:Pva1:EnableCallbacks 1
 dbpf testcam:cam1:AcquirePeriod 1

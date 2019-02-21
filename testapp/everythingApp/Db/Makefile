@@ -27,6 +27,9 @@ DB_INSTALLS += $(ADSIMDETECTOR)/db/simDetector.template
 DB_INSTALLS += $(ADURL)/db/URLDriver.template
 DB_INSTALLS += $(ADPVADRIVER)/db/pvaDriver.template
 
+DB_INSTALLS += $(MOTOR)/db/basic_asyn_motor.db
+DB += motorSim.substitutions
+
 include $(TOP)/configure/RULES
 #----------------------------------------
 #  ADD RULES AFTER THIS LINE
