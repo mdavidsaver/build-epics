@@ -1,5 +1,10 @@
 #!/bin/sh
 set -e -x
+ 
+if [ -d root ]; then 
+	chmod -R u+w root;
+	rm -rf root; 
+fi
 
 mkdir root
 ROOTDIR="$PWD/root"
@@ -15,6 +20,8 @@ EPICSDIR=`ls -1d "$ROOTDIR"/epics-*`
 echo "EPICSDIR=$EPICSDIR"
 
 "$EPICSDIR"/prepare.sh
+
+chmod -R u+w testapp
 
 sed -i -e 's|$(TOP)/..|'"$EPICSDIR"'|' testapp/configure/RELEASE
 
