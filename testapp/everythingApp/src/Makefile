@@ -14,6 +14,7 @@ DBD += everything.dbd
 
 # everything.dbd will be made up from these files:
 everything_DBD += base.dbd
+everything_DBD += system.dbd
 everything_DBD += asSupport.dbd
 everything_DBD += asyn.dbd
 everything_DBD += reccaster.dbd
