@@ -71,6 +71,8 @@ git_repo areaDetector R3-4       https://github.com/areaDetector/areaDetector.gi
 # get fix issue with ADCore 3.4
 #  Removed DTYP from MaxArrayRate_RBV calc record, not valid
 (cd areaDetector/ADCore && git checkout 4657f1b4b5765bb27a6cc842136cf961b95661e7)
+# get fix for possbile *NULL from non-compliant NTNDArray
+(cd areaDetector/pvaDriver && git checkout f1178ccc29d154b55667c6521c850596028225f7)
 
 export EPICS_HOST_ARCH=`./epics-base/startup/EpicsHostArch`
 
