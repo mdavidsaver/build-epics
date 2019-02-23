@@ -10,11 +10,13 @@
 # $(YSIZE)       The maximum image height; used to set the maximum size for column profiles in the NDPluginStats plugin
 # $(NCHANS)      The maximum number of time series points in the NDPluginStats, NDPluginROIStats, and NDPluginAttribute plugins
 epicsEnvSet("PREFIX", "testcam:")
+epicsEnvSet("IMAGE", "image1:")
 epicsEnvSet("PORT", "TESTCAM")
 epicsEnvSet("QSIZE", "5")
 epicsEnvSet("XSIZE", "1024")
 epicsEnvSet("YSIZE", "768")
 epicsEnvSet("NCHANS", "1024")
+epicsEnvSet("NELEMENTS", "12582912")
 
 ## Register all support components
 dbLoadDatabase("../../dbd/everything.dbd",0,0)
@@ -37,6 +39,10 @@ dbLoadRecords("simDetector.template","P=$(PREFIX),R=cam1:,PORT=$(PORT),ADDR=0,TI
 #dbLoadRecords("pvaDriver.template","P=$(PREFIX),R=cam1:,PORT=$(PORT),ADDR=0,TIMEOUT=1")
 ###
 
+### Create a standard arrays plugin to handle the image data
+NDStdArraysConfigure("Image1", 5, 0, $(PORT), 0, 0)
+### Use this line for 8-bit or 16-bit data
+dbLoadRecords("NDStdArrays.template", "P=$(PREFIX),R=$(IMAGE),PORT=Image1,ADDR=0,TIMEOUT=1,NDARRAY_PORT=$(PORT),TYPE=Int16,FTVL=SHORT,NELEMENTS=$(NELEMENTS)")
 
 # Create an HDF5 file saving plugin
 NDFileHDF5Configure("FileHDF1", $(QSIZE), 0, "$(PORT)", 0)

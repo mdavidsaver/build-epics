@@ -22,6 +22,7 @@ DB_INSTALLS += $(ADCORE)/db/ADBase.template
 DB_INSTALLS += $(ADCORE)/db/NDArrayBase.template
 DB_INSTALLS += $(ADCORE)/db/NDFile.template
 DB_INSTALLS += $(ADCORE)/db/NDPluginBase.template
+DB_INSTALLS += $(ADCORE)/db/NDStdArrays.template
 
 DB_INSTALLS += $(ADSIMDETECTOR)/db/simDetector.template
 DB_INSTALLS += $(ADURL)/db/URLDriver.template
