@@ -144,6 +144,7 @@ save_restoreSet_DatedBackupFiles(1)
 
 set_savefile_path("${TOP}/autosave","/save")
 set_requestfile_path("${TOP}/autosave","/req")
+#set_requestfile_path("/home/train/build-epics/sscan/sscanApp","/Db")
 
 system("install -m 777 -d ${TOP}/autosave/save")
 system("install -m 777 -d ${TOP}/autosave/req")
@@ -151,6 +152,8 @@ system("install -m 777 -d ${TOP}/autosave/req")
 set_pass0_restoreFile("info_positions.sav")
 set_pass0_restoreFile("info_settings.sav")
 set_pass1_restoreFile("info_settings.sav")
+#set_pass0_restoreFile("auto_settings.sav")
+#set_pass1_restoreFile("auto_settings.sav")
 
 dbLoadRecords("save_restoreStatus.db","P=$(PREFIX)")
 save_restoreSet_status_prefix("$(PREFIX)")
@@ -160,7 +163,7 @@ cd $(TOP)
 dbLoadTemplate("db/motorSim.substitutions")
 
 # Create simulated motors: ( start card , start axis , low limit, high limit, home posn, # cards, # axes to setup)
-#motorSimCreate( 0, 0, -32000, 32000, 0, 1, 6 )
+motorSimCreate( 0, 0, -32000, 32000, 0, 1, 6 )
 motorSimCreateController("motorSim1", 6)
 # Setup the Asyn layer (portname, low-level driver drvet name, card, number of axes on card)
 #drvAsynMotorConfigure("motorSim1", "motorSim", 0, 6)
@@ -171,13 +174,18 @@ motorSimConfigAxis("motorSim1", 3, 20000, -20000, 500, 0)
 motorSimConfigAxis("motorSim1", 4, 20000, -20000, 500, 0)
 motorSimConfigAxis("motorSim1", 5, 20000, -20000, 500, 0)
 
+# Load scan records
+#epicsEnvSet("MAXPTS", "1000")
+#dbLoadRecords("db/standardScans.db", "P=Test:,MAXPTS1=$(MAXPTS),MAXPTS2=$(MAXPTS),MAXPTS3=$(MAXPTS),MAXPTS4=$(MAXPTS),MAXPTSH=$(MAXPTS)")
+
 iocInit()
 
 ## more autosave/restore machinery
 cd $(TOP)/autosave/req
 makeAutosaveFiles()
-create_monitor_set("info_positions.req", 5 , "")
-create_monitor_set("info_settings.req", 15 , "")
+create_monitor_set("info_positions.req", 5, "")
+create_monitor_set("info_settings.req", 15, "")
+#create_monitor_set("auto_settings.req", 15, "")
 
 cd $(TOP)
 
