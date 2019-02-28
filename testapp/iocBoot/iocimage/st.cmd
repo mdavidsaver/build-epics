@@ -144,7 +144,7 @@ save_restoreSet_DatedBackupFiles(1)
 
 set_savefile_path("${TOP}/autosave","/save")
 set_requestfile_path("${TOP}/autosave","/req")
-#set_requestfile_path("/home/train/build-epics/sscan/sscanApp","/Db")
+set_requestfile_path("${TOP}/sscan/sscanApp","/Db")
 
 system("install -m 777 -d ${TOP}/autosave/save")
 system("install -m 777 -d ${TOP}/autosave/req")
@@ -152,8 +152,8 @@ system("install -m 777 -d ${TOP}/autosave/req")
 set_pass0_restoreFile("info_positions.sav")
 set_pass0_restoreFile("info_settings.sav")
 set_pass1_restoreFile("info_settings.sav")
-#set_pass0_restoreFile("auto_settings.sav")
-#set_pass1_restoreFile("auto_settings.sav")
+set_pass0_restoreFile("auto_settings.sav")
+set_pass1_restoreFile("auto_settings.sav")
 
 dbLoadRecords("save_restoreStatus.db","P=$(PREFIX)")
 save_restoreSet_status_prefix("$(PREFIX)")
@@ -175,8 +175,8 @@ motorSimConfigAxis("motorSim1", 4, 20000, -20000, 500, 0)
 motorSimConfigAxis("motorSim1", 5, 20000, -20000, 500, 0)
 
 # Load scan records
-#epicsEnvSet("MAXPTS", "1000")
-#dbLoadRecords("db/standardScans.db", "P=Test:,MAXPTS1=$(MAXPTS),MAXPTS2=$(MAXPTS),MAXPTS3=$(MAXPTS),MAXPTS4=$(MAXPTS),MAXPTSH=$(MAXPTS)")
+epicsEnvSet("MAXPTS", "1000")
+dbLoadRecords("db/standardScans.db", "P=Test:,MAXPTS1=$(MAXPTS),MAXPTS2=$(MAXPTS),MAXPTS3=$(MAXPTS),MAXPTS4=$(MAXPTS),MAXPTSH=$(MAXPTS)")
 
 iocInit()
 
@@ -185,7 +185,7 @@ cd $(TOP)/autosave/req
 makeAutosaveFiles()
 create_monitor_set("info_positions.req", 5, "")
 create_monitor_set("info_settings.req", 15, "")
-#create_monitor_set("auto_settings.req", 15, "")
+create_monitor_set("auto_settings.req", 15, "")
 
 cd $(TOP)
 

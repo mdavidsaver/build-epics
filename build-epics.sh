@@ -63,7 +63,7 @@ git_repo asyn       R4-34        https://github.com/epics-modules/asyn.git
 git_repo motor      R6-11        https://github.com/epics-modules/motor.git
 git_repo stream     R2-7-7b      https://github.com/epics-modules/stream.git
 git_repo seq        master       https://github.com/mdavidsaver/sequencer-mirror
-git_repo sscan      R2-11-1      https://github.com/epics-modules/sscan.git
+git_repo sscan      R2-11-2      https://github.com/epics-modules/sscan.git
 git_repo etherip    master       https://github.com/EPICSTools/ether_ip
 git_repo modbus     R2-11        https://github.com/epics-modules/modbus.git
 git_repo areaDetector R3-4       https://github.com/areaDetector/areaDetector.git
