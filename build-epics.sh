@@ -58,22 +58,16 @@ git_repo procserv   V2.7.0       https://github.com/ralphlange/procServ.git
 git_repo epics-base rpath-origin https://github.com/mdavidsaver/epics-base.git
 git_repo recsync    master       https://github.com/ChannelFinder/recsync.git
 git_repo autosave   R5-9         https://github.com/epics-modules/autosave.git
-git_repo calc       R3-7         https://github.com/epics-modules/calc.git
-git_repo busy       R1-7         https://github.com/epics-modules/busy.git
-git_repo asyn       R4-34        https://github.com/epics-modules/asyn.git
-git_repo motor      R6-11        https://github.com/epics-modules/motor.git
+git_repo calc       R3-7-2       https://github.com/epics-modules/calc.git
+git_repo busy       R1-7-1       https://github.com/epics-modules/busy.git
+git_repo asyn       R4-35        https://github.com/epics-modules/asyn.git
+git_repo motor      R7-0         https://github.com/epics-modules/motor.git
 git_repo stream     R2-7-7b      https://github.com/epics-modules/stream.git
 git_repo seq        master       https://github.com/mdavidsaver/sequencer-mirror
 git_repo sscan      R2-11-2      https://github.com/epics-modules/sscan.git
 git_repo etherip    master       https://github.com/EPICSTools/ether_ip
 git_repo modbus     R2-11        https://github.com/epics-modules/modbus.git
-git_repo areaDetector R3-4       https://github.com/areaDetector/areaDetector.git
-
-# get fix issue with ADCore 3.4
-#  Removed DTYP from MaxArrayRate_RBV calc record, not valid
-(cd areaDetector/ADCore && git checkout 4657f1b4b5765bb27a6cc842136cf961b95661e7)
-# get fix for possbile *NULL from non-compliant NTNDArray
-(cd areaDetector/pvaDriver && git checkout f1178ccc29d154b55667c6521c850596028225f7)
+git_repo areaDetector R3-5       https://github.com/areaDetector/areaDetector.git
 
 export EPICS_HOST_ARCH=`./epics-base/startup/EpicsHostArch`
 
