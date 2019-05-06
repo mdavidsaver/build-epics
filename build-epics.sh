@@ -54,6 +54,7 @@ do_module() {
     tar --exclude 'O.*' --exclude-vcs -rf $TAR $PREFIX/"$name"
 }
 
+git_repo procserv   V2.7.0       https://github.com/ralphlange/procServ.git
 git_repo epics-base rpath-origin https://github.com/mdavidsaver/epics-base.git
 git_repo recsync    master       https://github.com/ChannelFinder/recsync.git
 git_repo autosave   R5-9         https://github.com/epics-modules/autosave.git
@@ -215,6 +216,9 @@ git remote show origin -n > build-info
 git describe --always --tags --abbrev=8 HEAD && git log -n1 >> build-info
 
 tar -cf $TAR $PREFIX/build-info $PREFIX/prepare.sh $PREFIX/README.md $PREFIX/demo.db $PREFIX/build-epics.sh
+
+(cd procserv && autoreconf -v -f -i && ./configure --disable-doc )
+tar --exclude '*.o' --exclude autom4te.cache --exclude-vcs -rf $TAR $PREFIX/procserv
 
 do_module epics-base -s
 do_module autosave
