@@ -80,44 +80,44 @@ OP_SYS_LDFLAGS += \$(EXTRA_SHRLIBDIR_RPATH_LDFLAGS_\$(LINKER_USE_RPATH)_\$(STATI
 EOF
 
 cat <<EOF >autosave/configure/RELEASE
-EPICS_BASE=$BASEDIR/epics-base
+EPICS_BASE=\$(TOP)/../epics-base
 EOF
 
 cat <<EOF >recsync/client/configure/RELEASE
-EPICS_BASE=$BASEDIR/epics-base
+EPICS_BASE=\$(TOP)/../../epics-base
 EOF
 
 cat <<EOF >seq/configure/RELEASE
-EPICS_BASE=$BASEDIR/epics-base
+EPICS_BASE=\$(TOP)/../epics-base
 EOF
 
 cat <<EOF >asyn/configure/RELEASE
-EPICS_BASE=$BASEDIR/epics-base
+EPICS_BASE=\$(TOP)/../epics-base
 EOF
 
 cat <<EOF >etherip/configure/RELEASE
-EPICS_BASE=$BASEDIR/epics-base
+EPICS_BASE=\$(TOP)/../epics-base
 EOF
 
 cat <<EOF >busy/configure/RELEASE
 ASYN=\$(EPICS_BASE)/../asyn
-EPICS_BASE=$BASEDIR/epics-base
+EPICS_BASE=\$(TOP)/../epics-base
 EOF
 
 cat <<EOF >modbus/configure/RELEASE
 ASYN=\$(EPICS_BASE)/../asyn
-EPICS_BASE=$BASEDIR/epics-base
+EPICS_BASE=\$(TOP)/../epics-base
 EOF
 
 cat <<EOF >sscan/configure/RELEASE
 SNCSEQ=\$(EPICS_BASE)/../seq
-EPICS_BASE=$BASEDIR/epics-base
+EPICS_BASE=\$(TOP)/../epics-base
 EOF
 
 cat <<EOF >calc/configure/RELEASE
 SSCAN=\$(EPICS_BASE)/../sscan
 SNCSEQ=\$(EPICS_BASE)/../seq
-EPICS_BASE=$BASEDIR/epics-base
+EPICS_BASE=\$(TOP)/../epics-base
 EOF
 
 cat <<EOF >stream/configure/RELEASE
@@ -125,14 +125,14 @@ SSCAN=\$(EPICS_BASE)/../sscan
 SNCSEQ=\$(EPICS_BASE)/../seq
 CALC=\$(EPICS_BASE)/../calc
 ASYN=\$(EPICS_BASE)/../asyn
-EPICS_BASE=$BASEDIR/epics-base
+EPICS_BASE=\$(TOP)/../epics-base
 EOF
 
 cat <<EOF >motor/configure/RELEASE
 ASYN=\$(EPICS_BASE)/../asyn
 BUSY=\$(EPICS_BASE)/../busy
 SNCSEQ=\$(EPICS_BASE)/../seq
-EPICS_BASE=$BASEDIR/epics-base
+EPICS_BASE=\$(TOP)/../epics-base
 EOF
 
 if pkg-config --exists hdf5-serial
@@ -180,7 +180,7 @@ EOF
 
 cat <<EOF >areaDetector/ADCore/configure/RELEASE
 ASYN=\$(EPICS_BASE)/../asyn
-EPICS_BASE=$BASEDIR/epics-base
+EPICS_BASE=\$(TOP)/../epics-base
 EOF
 
 cat <<EOF >areaDetector/ADCore/configure/CONFIG_SITE
@@ -192,7 +192,7 @@ do
     cat <<EOF >areaDetector/$mod/configure/RELEASE
 ADCORE=\$(EPICS_BASE)/../areaDetector/ADCore
 ASYN=\$(EPICS_BASE)/../asyn
-EPICS_BASE=$BASEDIR/epics-base
+EPICS_BASE=\$(TOP)/../epics-base
 EOF
 
     cat <<EOF >areaDetector/$mod/configure/CONFIG_SITE
