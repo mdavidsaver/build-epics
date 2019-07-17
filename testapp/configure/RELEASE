@@ -12,5 +12,5 @@ MOTOR=$(EPICS_BASE)/../motor
 SSCAN=$(EPICS_BASE)/../sscan
 STREAM=$(EPICS_BASE)/../stream
 RECSYNC=$(EPICS_BASE)/../recsync/client
-SEQ=$(EPICS_BASE)/../seq
 EPICS_BASE=$(TOP)/../epics-base
+SNCSEQ=$(EPICS_BASE)/../seq
