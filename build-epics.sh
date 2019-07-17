@@ -223,6 +223,7 @@ tar -cf $TAR $PREFIX/build-info $PREFIX/prepare.sh $PREFIX/README.md $PREFIX/dem
 tar --exclude '*.o' --exclude autom4te.cache --exclude-vcs -rf $TAR $PREFIX/procserv
 
 do_module epics-base -s
+do_module caputlog
 do_module autosave
 do_module recsync/client
 do_module seq
