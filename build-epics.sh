@@ -240,7 +240,7 @@ do_module areaDetector/ADSimDetector
 do_module areaDetector/ADURL
 do_module areaDetector/pvaDriver
 
-tar -rf $TAR $PREFIX/*.version
+tar -rf $TAR $PREFIX/*.version $PREFIX/areaDetector/*.version
 
 gzip -f $TAR
 gzip -l $TAR.*
