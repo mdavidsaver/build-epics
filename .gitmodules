@@ -1,0 +1,55 @@
+[submodule "procserv"]
+	path = procserv
+	url = https://github.com/ralphlange/procServ.git
+[submodule "epics-base"]
+	path = epics-base
+	url = https://github.com/mdavidsaver/epics-base.git
+	branch = rpath-origin
+[submodule "caputlog"]
+	path = caputlog
+	url = https://github.com/epics-modules/caPutLog.git
+[submodule "recsync"]
+	path = recsync
+	url = https://github.com/ChannelFinder/recsync.git
+[submodule "autosave"]
+	path = autosave
+	url = https://github.com/epics-modules/autosave.git
+[submodule "calc"]
+	path = calc
+	url = https://github.com/epics-modules/calc.git
+[submodule "busy"]
+	path = busy
+	url = https://github.com/epics-modules/busy.git
+[submodule "asyn"]
+	path = asyn
+	url = https://github.com/epics-modules/asyn.git
+[submodule "motor"]
+	path = motor
+	url = https://github.com/epics-modules/motor.git
+[submodule "stream"]
+	path = stream
+	url = https://github.com/epics-modules/stream.git
+[submodule "seq"]
+	path = seq
+	url = https://github.com/mdavidsaver/sequencer-mirror
+[submodule "sscan"]
+	path = sscan
+	url = https://github.com/epics-modules/sscan.git
+[submodule "etherip"]
+	path = etherip
+	url = https://github.com/EPICSTools/ether_ip
+[submodule "modbus"]
+	path = modbus
+	url = https://github.com/epics-modules/modbus.git
+[submodule "ADCore"]
+	path = areaDetector/ADCore
+	url = https://github.com/areaDetector/ADCore.git
+[submodule "ADURL"]
+	path = areaDetector/ADURL
+	url = https://github.com/areaDetector/ADURL.git
+[submodule "pvaDriver"]
+	path = areaDetector/pvaDriver
+	url = https://github.com/areaDetector/pvaDriver.git
+[submodule "ADSimDetector"]
+	path = areaDetector/ADSimDetector
+	url = https://github.com/areaDetector/ADSimDetector.git

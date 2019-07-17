@@ -33,12 +33,12 @@ g++ --version || die "Missing gcc/g++"
 type re2c || die "Need re2c for sncseq"
 pkg-config --exists libpcre || die "Need libpcre headers for stream"
 
-# git_fetch <name> <rev> <url>
-git_repo() {
-    [ -d "$1" ] || git clone --depth 5 --recursive --branch "$2" "$3" "$1"
+# git_module <name>
+git_module() {
+    [ -d "$1" ] || die "Missing $1"
     echo "=== $1" > $1.version
-    echo "URL: $3" >> $1.version
-    (cd "$1" && git describe --always --tags --abbrev=8 HEAD && git log -n1) >> $1.version
+    printf "URL: " >> $1.version
+    (cd "$1" && git remote get-url origin && git describe --always --tags --abbrev=8 HEAD && git log -n1) >> $1.version
 }
 
 do_make() {
@@ -54,20 +54,24 @@ do_module() {
     tar --exclude 'O.*' --exclude-vcs -rf $TAR $PREFIX/"$name"
 }
 
-git_repo procserv   V2.7.0       https://github.com/ralphlange/procServ.git
-git_repo epics-base rpath-origin https://github.com/mdavidsaver/epics-base.git
-git_repo recsync    master       https://github.com/ChannelFinder/recsync.git
-git_repo autosave   R5-9         https://github.com/epics-modules/autosave.git
-git_repo calc       R3-7-2       https://github.com/epics-modules/calc.git
-git_repo busy       R1-7-1       https://github.com/epics-modules/busy.git
-git_repo asyn       R4-35        https://github.com/epics-modules/asyn.git
-git_repo motor      R7-0         https://github.com/epics-modules/motor.git
-git_repo stream     R2-7-7b      https://github.com/epics-modules/stream.git
-git_repo seq        master       https://github.com/mdavidsaver/sequencer-mirror
-git_repo sscan      R2-11-2      https://github.com/epics-modules/sscan.git
-git_repo etherip    master       https://github.com/EPICSTools/ether_ip
-git_repo modbus     R2-11        https://github.com/epics-modules/modbus.git
-git_repo areaDetector R3-5       https://github.com/areaDetector/areaDetector.git
+git_module procserv
+git_module epics-base
+git_module caputlog
+git_module recsync
+git_module autosave
+git_module calc
+git_module busy
+git_module asyn
+git_module motor
+git_module stream
+git_module seq
+git_module sscan
+git_module etherip
+git_module modbus
+git_module areaDetector/ADCore
+git_module areaDetector/ADSimDetector
+git_module areaDetector/ADURL
+git_module areaDetector/pvaDriver
 
 export EPICS_HOST_ARCH=`./epics-base/startup/EpicsHostArch`
 
@@ -77,6 +81,10 @@ CROSS_COMPILER_TARGET_ARCHS += \$(EPICS_HOST_ARCH)-debug
 # workaround for https://sourceware.org/bugzilla/show_bug.cgi?id=16936
 EXTRA_SHRLIBDIR_RPATH_LDFLAGS_ORIGIN_NO += \$(SHRLIB_SEARCH_DIRS:%=-Wl,-rpath-link,%)
 OP_SYS_LDFLAGS += \$(EXTRA_SHRLIBDIR_RPATH_LDFLAGS_\$(LINKER_USE_RPATH)_\$(STATIC_BUILD))
+EOF
+
+cat <<EOF >caputlog/configure/RELEASE
+EPICS_BASE=\$(TOP)/../epics-base
 EOF
 
 cat <<EOF >autosave/configure/RELEASE
@@ -180,7 +188,7 @@ EOF
 
 cat <<EOF >areaDetector/ADCore/configure/RELEASE
 ASYN=\$(EPICS_BASE)/../asyn
-EPICS_BASE=\$(TOP)/../epics-base
+EPICS_BASE=\$(TOP)/../../epics-base
 EOF
 
 cat <<EOF >areaDetector/ADCore/configure/CONFIG_SITE
@@ -190,9 +198,9 @@ EOF
 for mod in ADSimDetector ADURL pvaDriver
 do
     cat <<EOF >areaDetector/$mod/configure/RELEASE
-ADCORE=\$(EPICS_BASE)/../areaDetector/ADCore
+ADCORE=\$(TOP)/../ADCore
 ASYN=\$(EPICS_BASE)/../asyn
-EPICS_BASE=\$(TOP)/../epics-base
+EPICS_BASE=\$(TOP)/../../epics-base
 EOF
 
     cat <<EOF >areaDetector/$mod/configure/CONFIG_SITE
