@@ -43,3 +43,9 @@ Build with compressed debug.  Unpacked tree is ~30% smaller.
 ```
 ./build-epics.sh -j2 CMD_CPPFLAGS='-gz=zlib-gnu' CMD_LDFLAGS='-Wl,--compress-debug-sections=zlib-gnu'
 ```
+
+Capture shared library dependencies
+
+```sh
+ls -1 {areaDetector/,}*/lib/linux-x86_64/*.so */bin/linux-x86_64/* |xargs readelf -d 2>/dev/null |grep NEEDED|sort -u
+```

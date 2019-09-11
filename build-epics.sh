@@ -3,16 +3,18 @@ set -e -x
 # Build epics-base and common support modules
 #
 # Required Debian packages to build
-#  build-essential
+#  build-essential autoconf automake
 #  libreadline6-dev libncurses5-dev perl
-#  libpcre3-dev
+#  libpcre3-dev libxml2-dev libjpeg-dev libxext-dev
 #  re2c
-#  libgraphicsmagick++-dev libaec-dev libhdf5-dev libaec-devel libjpeg-dev libnetcdf-dev libtiff-dev libz-dev
+#  libgraphicsmagick++-dev libaec-dev libhdf5-dev libaec-devel libjpeg-dev libnetcdf-dev
+#  libtiff-dev libz-dev
 #
 # Required RHEL/CentOS
-#  gcc-c++ glibc-devel make readline-devel ncurses-devel
+#  gcc-c++ glibc-devel make readline-devel ncurses-devel autoconf automake
 #  perl-devel
-#  pkg-config pcre-devel
+#  pkg-config pcre-devel libxml2-devel libjpeg-turbo-devel libtiff-devel
+#  libXext-devel
 # From EPEL
 #  re2c
 #  GraphicsMagick-c++-devel hdf5-devel libaec-devel netcdf-devel
@@ -38,7 +40,7 @@ git_module() {
     [ -d "$1" ] || die "Missing $1"
     echo "=== $1" > $1.version
     printf "URL: " >> $1.version
-    (cd "$1" && git remote get-url origin && git describe --always --tags --abbrev=8 HEAD && git log -n1) >> $1.version
+    (cd "$1" && (git remote get-url origin || git remote show -n origin|grep Fetch) && git describe --always --tags --abbrev=8 HEAD && git log -n1) >> $1.version
 }
 
 do_make() {
