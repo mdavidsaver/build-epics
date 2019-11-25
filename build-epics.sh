@@ -67,6 +67,7 @@ git_module asyn
 git_module motor
 git_module stream
 git_module seq
+git_module iocstats
 git_module sscan
 git_module etherip
 git_module modbus
@@ -98,6 +99,11 @@ EPICS_BASE=\$(TOP)/../../epics-base
 EOF
 
 cat <<EOF >seq/configure/RELEASE
+EPICS_BASE=\$(TOP)/../epics-base
+EOF
+
+cat <<EOF >iocstats/configure/RELEASE
+SNCSEQ=\$(EPICS_BASE)/../seq
 EPICS_BASE=\$(TOP)/../epics-base
 EOF
 

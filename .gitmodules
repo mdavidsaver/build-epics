@@ -53,3 +53,6 @@
 [submodule "ADSimDetector"]
 	path = areaDetector/ADSimDetector
 	url = https://github.com/areaDetector/ADSimDetector.git
+[submodule "iocstats"]
+	path = iocstats
+	url = https://github.com/epics-modules/iocStats.git
