@@ -1,4 +1,4 @@
 eactivate
-/*.version
+*.version
 /*.gz
 /build-info
