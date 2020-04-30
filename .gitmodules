@@ -4,7 +4,7 @@
 [submodule "epics-base"]
 	path = epics-base
 	url = https://github.com/mdavidsaver/epics-base.git
-	branch = rpath-origin
+	branch = 7.0
 [submodule "caputlog"]
 	path = caputlog
 	url = https://github.com/epics-modules/caPutLog.git
