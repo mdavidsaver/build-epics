@@ -31,6 +31,9 @@ DB_INSTALLS += $(ADPVADRIVER)/db/pvaDriver.template
 DB_INSTALLS += $(SSCAN)/sscanApp/Db/standardScans.db
 
 DB_INSTALLS += $(AUTOSAVE)/db/save_restoreStatus.db
+
+DB_INSTALLS += $(IOCSTATS)/db/iocAdminSoft.db
+
 DB += basic_asyn_motor.db
 DB += motorSim.substitutions
 

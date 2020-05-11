@@ -178,6 +178,8 @@ motorSimConfigAxis("motorSim1", 5, 20000, -20000, 500, 0)
 epicsEnvSet("MAXPTS", "1000")
 dbLoadRecords("db/standardScans.db", "P=Test:,MAXPTS1=$(MAXPTS),MAXPTS2=$(MAXPTS),MAXPTS3=$(MAXPTS),MAXPTS4=$(MAXPTS),MAXPTSH=$(MAXPTS)")
 
+dbLoadRecords("db/iocAdminSoft.db", "IOC=$(PREFIX)")
+
 iocInit()
 
 ## more autosave/restore machinery
@@ -189,5 +191,5 @@ create_monitor_set("auto_settings.req", 15, "")
 
 cd $(TOP)
 
-dbpf testcam:Pva1:EnableCallbacks 1
-dbpf testcam:cam1:AcquirePeriod 1
+dbpf $(PREFIX)Pva1:EnableCallbacks 1
+dbpf $(PREFIX)cam1:AcquirePeriod 1

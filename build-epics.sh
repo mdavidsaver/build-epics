@@ -235,6 +235,7 @@ do_module caputlog
 do_module autosave
 do_module recsync/client
 do_module seq
+do_module iocstats
 do_module asyn
 do_module busy
 do_module sscan

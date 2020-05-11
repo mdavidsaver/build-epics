@@ -14,6 +14,7 @@ PROD_IOC = everything
 DBD += everything.dbd
 
 # Add all the support libraries needed by this IOC
+everything_LIBS += devIocStats
 everything_LIBS += simDetector
 everything_LIBS += URLDriver
 everything_LIBS += pvaDriver
@@ -72,6 +73,7 @@ everything_DBD += devNewFocus.dbd
 everything_DBD += simDetectorSupport.dbd
 everything_DBD += URLDriverSupport.dbd
 everything_DBD += pvaDriverSupport.dbd
+everything_DBD += devIocStats.dbd
 
 #===========================
 
