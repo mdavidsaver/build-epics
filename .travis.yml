@@ -1,5 +1,4 @@
 sudo: false
-dist: xenial
 language: c
 compiler:
   - gcc
@@ -19,6 +18,22 @@ addons:
     - libnetcdf-dev
     - libtiff-dev
     - libz-dev
+
 script:
   - travis_wait 30 sh build-epics.sh -j2 </dev/null
   - ./build-testapp.sh
+
+jobs:
+  include:
+  - dist: xenial
+  - dist: bionic
+
+  - env: IMAGE=centos:8
+    services: docker
+    install: docker pull $IMAGE
+    script: travis_wait 30 docker run --rm -v `pwd`:/io -w /io $IMAGE ./centos-build.sh
+
+  - env: IMAGE=centos:7
+    services: docker
+    install: docker pull $IMAGE
+    script: travis_wait 30 docker run --rm -v `pwd`:/io -w /io $IMAGE ./centos-build.sh
