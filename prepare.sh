@@ -42,7 +42,15 @@ System package dependencies
    libgraphicsmagick++-dev libaec-dev libhdf5-dev libaec-dev libjpeg-dev libnetcdf-dev \\
    libtiff-dev libz-dev
 
-  # RHEL/CentOS  w/ EPEL
+  # RHEL/CentOS 8
+  dnf install epel-release dnf-plugins-core
+  dnf config-manager --set-enabled PowerTools
+  dnf install gcc-c++ glibc-devel make readline-devel ncurses-devel perl-devel \\
+   pkg-config pcre-devel re2c GraphicsMagick-c++-devel hdf5-devel libaec-devel \\
+   netcdf-devel libxml2-devel
+
+  # RHEL/CentOS <= 7
+  yum install epel-release
   yum install gcc-c++ glibc-devel make readline-devel ncurses-devel perl-devel \\
    pkg-config pcre-devel re2c GraphicsMagick-c++-devel hdf5-devel libaec-devel \\
    netcdf-devel

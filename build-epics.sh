@@ -86,6 +86,19 @@ EXTRA_SHRLIBDIR_RPATH_LDFLAGS_ORIGIN_NO += \$(SHRLIB_SEARCH_DIRS:%=-Wl,-rpath-li
 OP_SYS_LDFLAGS += \$(EXTRA_SHRLIBDIR_RPATH_LDFLAGS_\$(LINKER_USE_RPATH)_\$(STATIC_BUILD))
 EOF
 
+if [ ! -f /usr/include/rpc/rpc.h ]
+then
+  cat <<EOF >asyn/configure/CONFIG_SITE.local
+TIRPC=YES
+EOF
+else
+  rm -f asyn/configure/CONFIG_SITE.local
+fi
+
+cat <<EOF > areaDetector/ADCore/configure/CONFIG_SITE.local
+XML2_INCLUDE=/usr/include/libxml2
+EOF
+
 cat <<EOF >caputlog/configure/RELEASE
 EPICS_BASE=\$(TOP)/../epics-base
 EOF

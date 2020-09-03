@@ -49,3 +49,9 @@ Capture shared library dependencies
 ```sh
 ls -1 {areaDetector/,}*/lib/linux-x86_64/*.so */bin/linux-x86_64/* |xargs readelf -d 2>/dev/null |grep NEEDED|sort -u
 ```
+
+
+RHEL8 Package list
+------------------
+
+glibc-devel make readline-devel ncurses-devel perl-devel pkg-config pcre-devel re2c GraphicsMagick-c++-devel libjpeg-turbo-devel libtiff-devel libXext-devel hdf5-devel libaec-devel netcdf-devel libxml2-devel tar autoconf automake libtool python3 rpcgen libtirpc-devel
