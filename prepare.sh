@@ -39,7 +39,7 @@ System package dependencies
 
   # Debian
   apt-get install build-essential libreadline6-dev libncurses5-dev perl libpcre3-dev re2c \\
-   libgraphicsmagick++-dev libaec-dev libhdf5-dev libaec-devel libjpeg-dev libnetcdf-dev \\
+   libgraphicsmagick++-dev libaec-dev libhdf5-dev libaec-dev libjpeg-dev libnetcdf-dev \\
    libtiff-dev libz-dev
 
   # RHEL/CentOS  w/ EPEL
