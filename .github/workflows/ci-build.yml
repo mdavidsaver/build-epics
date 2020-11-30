@@ -1,0 +1,40 @@
+name: build-epics
+
+on: [push, pull_request]
+
+jobs:
+  build-ubuntu:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["ubuntu-20.04", "ubuntu-16.04"]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - name: "apt-get install"
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install libreadline6-dev libncurses5-dev perl re2c python-dev python-nose python-numpy libgraphicsmagick++-dev libhdf5-dev libjpeg-dev libnetcdf-dev libtiff-dev libz-dev
+      - name: Build
+        run: ./build-epics.sh -j2 </dev/null
+      - name: Test
+        run: ./build-testapp.sh
+
+  build-centos:
+    name: ${{ matrix.image }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        image: ["centos:7", "centos:8"]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - name: Docker setup
+        run: docker pull ${{ matrix.image }}
+      - name: Build & Test
+        run: docker run --rm -v `pwd`:/io -w /io ${{ matrix.image }} ./centos-build.sh
