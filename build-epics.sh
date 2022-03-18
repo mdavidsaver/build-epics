@@ -58,6 +58,8 @@ do_module() {
 
 git_module procserv
 git_module epics-base
+git_module pcas
+git_module ca-cagateway
 git_module caputlog
 git_module recsync
 git_module autosave
@@ -97,6 +99,15 @@ fi
 
 cat <<EOF > areaDetector/ADCore/configure/CONFIG_SITE.local
 XML2_INCLUDE=/usr/include/libxml2
+EOF
+
+cat <<EOF >pcas/configure/RELEASE
+EPICS_BASE=\$(TOP)/../epics-base
+EOF
+
+cat <<EOF >ca-cagateway/configure/RELEASE
+PCAS=\$(EPICS_BASE)/../pcas
+EPICS_BASE=\$(TOP)/../epics-base
 EOF
 
 cat <<EOF >caputlog/configure/RELEASE
@@ -244,6 +255,8 @@ tar -cf $TAR $PREFIX/build-info $PREFIX/prepare.sh $PREFIX/README.md $PREFIX/dem
 tar --exclude '*.o' --exclude autom4te.cache --exclude-vcs -rf $TAR $BASEDIR/usr
 
 do_module epics-base -s
+do_module pcas
+do_module ca-cagateway EMBEDDED_TOPS=
 do_module caputlog
 do_module autosave
 do_module recsync/client

@@ -56,3 +56,9 @@
 [submodule "iocstats"]
 	path = iocstats
 	url = https://github.com/epics-modules/iocStats.git
+[submodule "ca-cagateway"]
+	path = ca-cagateway
+	url = https://github.com/epics-extensions/ca-gateway.git
+[submodule "pcas"]
+	path = pcas
+	url = https://github.com/epics-modules/pcas.git
