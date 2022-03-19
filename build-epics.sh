@@ -19,7 +19,7 @@ set -e -x
 #  re2c
 #  GraphicsMagick-c++-devel hdf5-devel libaec-devel netcdf-devel
 
-BASEDIR="$PWD"
+BASEDIR="$(dirname "$(readlink -f "$0")")"
 PREFIX=epics-`uname -m`-`date +%Y%m%d`
 TAR=$PREFIX.tar
 
@@ -29,6 +29,8 @@ die() {
     echo "$1" >&1
     exit 1
 }
+
+cd "$BASEDIR"
 
 perl --version || die "Missing perl"
 g++ --version || die "Missing gcc/g++"
