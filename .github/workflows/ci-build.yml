@@ -29,7 +29,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        image: ["centos:7"]
+        image: ["centos:7", "quay.io/centos/centos:stream8"]
     steps:
       - uses: actions/checkout@v2
         with:
@@ -37,4 +37,4 @@ jobs:
       - name: Docker setup
         run: docker pull ${{ matrix.image }}
       - name: Build & Test
-        run: docker run --rm -v `pwd`:/io -w /io ${{ matrix.image }} ./centos-build.sh
+        run: docker run --rm -v `pwd`:/io -w /io ${{ matrix.image }} ./docker-build.sh
