@@ -34,7 +34,7 @@ cd "$BASEDIR"
 
 perl --version || die "Missing perl"
 g++ --version || die "Missing gcc/g++"
-type re2c || die "Need re2c for sncseq"
+type re2c || die "Need re2c for sncseq.  Missing PowerTools?"
 pkg-config --exists libpcre || die "Need libpcre headers for stream"
 
 # git_module <name>
