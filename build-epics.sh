@@ -254,7 +254,7 @@ git describe --always --tags --abbrev=8 HEAD && git log -n1 >> build-info
 tar -cf $TAR $PREFIX/build-info $PREFIX/prepare.sh $PREFIX/README.md $PREFIX/demo.db $PREFIX/build-epics.sh
 
 (cd procserv && autoreconf -v -f -i && ./configure --disable-doc --prefix=$BASEDIR/usr && make install )
-tar --exclude '*.o' --exclude autom4te.cache --exclude-vcs -rf $TAR $BASEDIR/usr
+tar --exclude '*.o' --exclude autom4te.cache --exclude-vcs -rf $TAR $PREFIX/usr
 
 do_module epics-base -s
 do_module pcas
