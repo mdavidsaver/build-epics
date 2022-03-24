@@ -37,4 +37,4 @@ jobs:
       - name: Docker setup
         run: docker pull ${{ matrix.image }}
       - name: Build & Test
-        run: docker run --rm -v `pwd`:/io -w /io ${{ matrix.image }} ./docker-build.sh
+        run: docker run --rm -v `pwd`:/io -w /io ${{ matrix.image }} ./docker-build.sh -j2
