@@ -28,7 +28,7 @@
 	url = https://github.com/epics-modules/motor.git
 [submodule "stream"]
 	path = stream
-	url = https://github.com/epics-modules/stream.git
+	url = https://github.com/paulscherrerinstitute/StreamDevice.git
 [submodule "seq"]
 	path = seq
 	url = https://github.com/mdavidsaver/sequencer-mirror
@@ -62,3 +62,6 @@
 [submodule "pcas"]
 	path = pcas
 	url = https://github.com/epics-modules/pcas.git
+[submodule "pvxs"]
+	path = pvxs
+	url = https://github.com/mdavidsaver/pvxs

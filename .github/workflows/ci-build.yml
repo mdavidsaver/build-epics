@@ -9,7 +9,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ["ubuntu-20.04", "ubuntu-18.04"]
+        include:
+          - os: "ubuntu-20.04"
+            name: "ubuntu2004"
+          - os: "ubuntu-18.04"
+            name: "ubuntu1804"
     steps:
       - uses: actions/checkout@v2
         with:
@@ -17,11 +21,20 @@ jobs:
       - name: "apt-get install"
         run: |
           sudo apt-get update
-          sudo apt-get -y install libreadline6-dev libncurses5-dev perl re2c python-dev python-nose python-numpy libgraphicsmagick++-dev libhdf5-dev libjpeg-dev libnetcdf-dev libtiff-dev libz-dev
+          sudo apt-get -y install libreadline6-dev libncurses5-dev perl re2c \
+            python-dev python-nose python-numpy libgraphicsmagick++-dev \
+            libhdf5-dev libjpeg-dev libnetcdf-dev libtiff-dev libz-dev \
+            xz-utils
       - name: Build
-        run: ./build-epics.sh -j2 </dev/null
+        run: ./build-epics.sh -j2 -p${{ matrix.name }} </dev/null
       - name: Test
         run: ./build-testapp.sh
+      - name: Upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: tar-${{ matrix.name }}
+          path: epics-*.tar.*
+          retention-days: 1
 
   build-centos:
     name: ${{ matrix.image }}
@@ -29,12 +42,26 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        image: ["centos:7", "quay.io/centos/centos:stream8", "debian:11"]
+        include:
+          - image: "centos:7"
+            name: "centos7"
+
+          - image: "quay.io/centos/centos:stream8"
+            name: "centos8"
+
+          - image: "debian:11"
+            name: "debian11"
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: recursive
       - name: Docker setup
         run: docker pull ${{ matrix.image }}
       - name: Build & Test
-        run: docker run --rm -v `pwd`:/io -w /io ${{ matrix.image }} ./docker-build.sh -j2
+        run: docker run --rm -v `pwd`:/io -w /io ${{ matrix.image }} ./docker-build.sh -j2 -p${{ matrix.name }}
+      - name: Upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: tar-${{ matrix.name }}
+          path: epics-*.tar.*
+          retention-days: 1

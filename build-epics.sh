@@ -19,11 +19,25 @@ set -e -x
 #  re2c
 #  GraphicsMagick-c++-devel hdf5-devel libaec-devel netcdf-devel
 
+opt_J=2
+opt_P=
+while getopts hj:p: opt
+do
+    case $opt in
+    j)  opt_J=$OPTARG;;
+    p)  opt_P=-${OPTARG};;
+    *)  echo "$0 [-j #] [-p NAME]"
+        exit 1
+        ;;
+    esac
+done
+shift `expr $OPTIND - 1`
+
 BASEDIR="$(dirname "$(readlink -f "$0")")"
-PREFIX=epics-`uname -m`-`date +%Y%m%d`
+PREFIX=epics${opt_P}-`uname -m`-`date +%Y%m%d`
 TAR=$PREFIX.tar
 
-PMAKE="$@"
+PMAKE="-j${opt_J}"
 
 die() {
     echo "$1" >&1
@@ -60,6 +74,7 @@ do_module() {
 
 git_module procserv
 git_module epics-base
+git_module pvxs
 git_module pcas
 git_module ca-cagateway
 git_module caputlog
@@ -98,8 +113,8 @@ else
   rm -f asyn/configure/CONFIG_SITE.local
 fi
 
-cat <<EOF > areaDetector/ADCore/configure/CONFIG_SITE.local
-XML2_INCLUDE=/usr/include/libxml2
+cat <<EOF >pvxs/configure/RELEASE
+EPICS_BASE=\$(TOP)/../epics-base
 EOF
 
 cat <<EOF >pcas/configure/RELEASE
@@ -178,8 +193,6 @@ install -d areaDetector/ADCore/cfg
 
 cat <<EOF >areaDetector/ADCore/cfg/CONFIG_ADCORE_MODULE
 XML2_INCLUDE = /usr/include/libxml2
-GRAPHICSMAGICK_INCLUDE = /usr/include/GraphicsMagick
-HDF5_INCLUDE = /usr/include/hdf5/serial
 USR_LDFLAGS += $HDF5_LDFLAGS
 WITH_PVA  = YES
 WITH_QSRV = YES
@@ -189,9 +202,12 @@ WITH_BLOSC = NO
 # libgraphicsmagick++-dev
 # GraphicsMagick-c++-devel
 WITH_GRAPHICSMAGICK = YES
+GRAPHICSMAGICK_INCLUDE = /usr/include/GraphicsMagick
+GRAPHICSMAGICK_EXTERNAL = YES
 # libhdf5-dev
 # hdf5-devel
 WITH_HDF5 = YES
+HDF5_INCLUDE = /usr/include/hdf5/serial
 # libjpeg-dev
 WITH_JPEG = YES
 # libnetcdf-dev
@@ -210,6 +226,7 @@ WITH_SZIP = YES
 WITH_TIFF = YES
 # libz-dev
 WITH_ZLIB = YES
+$(error am here)
 EOF
 
 cat <<EOF >areaDetector/ADCore/configure/RELEASE
@@ -219,6 +236,7 @@ EOF
 
 cat <<EOF >areaDetector/ADCore/configure/CONFIG_SITE
 CHECK_RELEASE = YES
+include \$(TOP)/cfg/CONFIG_ADCORE_MODULE
 EOF
 
 for mod in ADSimDetector ADURL pvaDriver
@@ -248,7 +266,19 @@ tar -cf $TAR $PREFIX/build-info $PREFIX/prepare.sh $PREFIX/README.md $PREFIX/dem
 (cd procserv && autoreconf -v -f -i && ./configure --disable-doc --prefix=$BASEDIR/usr && make install )
 tar --exclude '*.o' --exclude autom4te.cache --exclude-vcs -rf $TAR $PREFIX/usr
 
+if [ -f /usr/bin/cmake ]
+then
+    LIBEVENT_ARGS=LIBEVENT_USE_CMAKE=YES
+else
+    LIBEVENT_ARGS=LIBEVENT_USE_CMAKE=NO
+fi
+
+echo "Bundled libevent"
+(cd pvxs/bundle && do_make $LIBEVENT_ARGS libevent.${EPICS_HOST_ARCH})
+(cd pvxs/bundle && do_make $LIBEVENT_ARGS libevent.${EPICS_HOST_ARCH}-debug)
+
 do_module epics-base -s
+do_module pvxs
 do_module pcas
 do_module ca-cagateway EMBEDDED_TOPS=
 do_module caputlog
@@ -270,6 +300,6 @@ do_module areaDetector/pvaDriver
 
 tar -rf $TAR $PREFIX/*.version $PREFIX/areaDetector/*.version
 
-gzip -f $TAR
-gzip -l $TAR.*
+xz -f $TAR
+xz -l $TAR.*
 ls -lh $TAR.*
