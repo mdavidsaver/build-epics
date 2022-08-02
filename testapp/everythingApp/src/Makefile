@@ -18,15 +18,11 @@ everything_LIBS += devIocStats
 everything_LIBS += simDetector
 everything_LIBS += URLDriver
 everything_LIBS += pvaDriver
-everything_LIBS += NewFocus
 
 # commonDriverMakefile appends to everything_LIBS and initializes everything_DBD
 DBD_NAME = everything
 include $(ADCORE)/cfg/commonDriverMakefile
 
-everything_LIBS += softMotor
-everything_LIBS += motorSimSupport
-everything_LIBS += motor
 everything_LIBS += stream
 ##everything_LIBS += sscan
 everything_LIBS += modbus
@@ -66,10 +62,6 @@ everything_DBD += ether_ip.dbd
 everything_DBD += modbusSupport.dbd
 ##everything_DBD += sscanSupport.dbd
 everything_DBD += stream.dbd
-everything_DBD += motorSupport.dbd
-everything_DBD += devSoftMotor.dbd
-everything_DBD += motorSimSupport.dbd
-everything_DBD += devNewFocus.dbd
 everything_DBD += simDetectorSupport.dbd
 everything_DBD += URLDriverSupport.dbd
 everything_DBD += pvaDriverSupport.dbd

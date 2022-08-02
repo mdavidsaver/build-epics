@@ -8,7 +8,6 @@ BUSY=$(EPICS_BASE)/../busy
 CALC=$(EPICS_BASE)/../calc
 ETHERIP=$(EPICS_BASE)/../etherip
 MODBUS=$(EPICS_BASE)/../modbus
-MOTOR=$(EPICS_BASE)/../motor
 SSCAN=$(EPICS_BASE)/../sscan
 STREAM=$(EPICS_BASE)/../stream
 RECSYNC=$(EPICS_BASE)/../recsync/client

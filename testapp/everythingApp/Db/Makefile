@@ -34,9 +34,6 @@ DB_INSTALLS += $(AUTOSAVE)/db/save_restoreStatus.db
 
 DB_INSTALLS += $(IOCSTATS)/db/iocAdminSoft.db
 
-DB += basic_asyn_motor.db
-DB += motorSim.substitutions
-
 include $(TOP)/configure/RULES
 #----------------------------------------
 #  ADD RULES AFTER THIS LINE

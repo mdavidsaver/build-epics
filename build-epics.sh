@@ -68,7 +68,6 @@ git_module autosave
 git_module calc
 git_module busy
 git_module asyn
-git_module motor
 git_module stream
 git_module seq
 git_module iocstats
@@ -170,13 +169,6 @@ ASYN=\$(EPICS_BASE)/../asyn
 EPICS_BASE=\$(TOP)/../epics-base
 EOF
 
-cat <<EOF >motor/configure/RELEASE
-ASYN=\$(EPICS_BASE)/../asyn
-BUSY=\$(EPICS_BASE)/../busy
-SNCSEQ=\$(EPICS_BASE)/../seq
-EPICS_BASE=\$(TOP)/../epics-base
-EOF
-
 if pkg-config --exists hdf5-serial
 then
   HDF5_LDFLAGS=`pkg-config hdf5-serial --libs-only-L`
@@ -269,7 +261,6 @@ do_module busy
 do_module sscan
 do_module calc
 do_module stream BUILD_PCRE=NO
-do_module motor
 do_module etherip
 do_module modbus
 do_module areaDetector/ADCore
