@@ -7,9 +7,8 @@ cat /etc/os-release
 rh_install() {
     $1 -y install perl gcc-c++ make git xz \
         glibc-devel make readline-devel ncurses-devel perl-devel \
-        pkg-config pcre-devel re2c GraphicsMagick-c++-devel libjpeg-turbo-devel \
-        libtiff-devel libXext-devel hdf5-devel libaec-devel netcdf-devel \
-        libxml2-devel tar autoconf automake libtool python3 rpcgen libtirpc-devel
+        pkg-config pcre-devel re2c tar autoconf automake libtool \
+        python3 rpcgen libtirpc-devel
 }
 
 case "$ID/$VERSION_ID" in

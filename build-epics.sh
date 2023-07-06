@@ -89,10 +89,6 @@ git_module iocstats
 git_module sscan
 git_module etherip
 git_module modbus
-git_module areaDetector/ADCore
-git_module areaDetector/ADSimDetector
-git_module areaDetector/ADURL
-git_module areaDetector/pvaDriver
 
 export EPICS_HOST_ARCH=`./epics-base/startup/EpicsHostArch`
 
@@ -184,75 +180,6 @@ ASYN=\$(EPICS_BASE)/../asyn
 EPICS_BASE=\$(TOP)/../epics-base
 EOF
 
-if pkg-config --exists hdf5-serial
-then
-  HDF5_LDFLAGS=`pkg-config hdf5-serial --libs-only-L`
-fi
-
-install -d areaDetector/ADCore/cfg
-
-cat <<EOF >areaDetector/ADCore/cfg/CONFIG_ADCORE_MODULE
-XML2_INCLUDE = /usr/include/libxml2
-USR_LDFLAGS += $HDF5_LDFLAGS
-WITH_PVA  = YES
-WITH_QSRV = YES
-# libblosc-dev
-# blosc-devel
-WITH_BLOSC = NO
-# libgraphicsmagick++-dev
-# GraphicsMagick-c++-devel
-WITH_GRAPHICSMAGICK = YES
-GRAPHICSMAGICK_INCLUDE = /usr/include/GraphicsMagick
-GRAPHICSMAGICK_EXTERNAL = YES
-# libhdf5-dev
-# hdf5-devel
-WITH_HDF5 = YES
-HDF5_INCLUDE = /usr/include/hdf5/serial
-# libjpeg-dev
-WITH_JPEG = YES
-# libnetcdf-dev
-# netcdf-devel
-WITH_NETCDF = YES
-# libnexus0-dev
-# (not in EPEL)
-WITH_NEXUS = NO
-# libopencv-dev
-# opencv-devel
-WITH_OPENCV = NO
-# libaec-dev
-# libaec-devel
-WITH_SZIP = YES
-# libtiff-dev
-WITH_TIFF = YES
-# libz-dev
-WITH_ZLIB = YES
-$(error am here)
-EOF
-
-cat <<EOF >areaDetector/ADCore/configure/RELEASE
-ASYN=\$(EPICS_BASE)/../asyn
-EPICS_BASE=\$(TOP)/../../epics-base
-EOF
-
-cat <<EOF >areaDetector/ADCore/configure/CONFIG_SITE
-CHECK_RELEASE = YES
-include \$(TOP)/cfg/CONFIG_ADCORE_MODULE
-EOF
-
-for mod in ADSimDetector ADURL pvaDriver
-do
-    cat <<EOF >areaDetector/$mod/configure/RELEASE
-ADCORE=\$(TOP)/../ADCore
-ASYN=\$(EPICS_BASE)/../asyn
-EPICS_BASE=\$(TOP)/../../epics-base
-EOF
-
-    cat <<EOF >areaDetector/$mod/configure/CONFIG_SITE
-CHECK_RELEASE = YES
-EOF
-
-done
-
 trap 'rm -f $PREFIX $TAR' TERM KILL HUP EXIT
 
 rm -f $PREFIX
@@ -293,12 +220,8 @@ do_module calc
 do_module stream BUILD_PCRE=NO
 do_module etherip
 do_module modbus
-do_module areaDetector/ADCore
-do_module areaDetector/ADSimDetector
-do_module areaDetector/ADURL
-do_module areaDetector/pvaDriver
 
-tar -rf $TAR $PREFIX/*.version $PREFIX/areaDetector/*.version
+tar -rf $TAR $PREFIX/*.version
 
 xz -f $TAR
 xz -l $TAR.*
