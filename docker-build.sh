@@ -17,8 +17,8 @@ centos/7*)
     yum -y install epel-release
     rh_install yum
     ;;
-centos/8*)
-    dnf -y install epel-release dnf-plugins-core centos-stream-repos
+rocky/8*)
+    dnf -y install epel-release dnf-plugins-core
     dnf -y config-manager --set-enabled powertools
 
     dnf -y install python2
@@ -39,6 +39,9 @@ debian/*)
     exit 1
     ;;
 esac
+
+# docker runs as a different user than the GHA clone
+git config --global --add safe.directory '*'
 
 ./build-epics.sh "$@" </dev/null
 
