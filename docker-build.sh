@@ -17,13 +17,19 @@ centos/7*)
     rh_install yum
     ;;
 rocky/8*)
-    dnf -y install epel-release dnf-plugins-core
+    dnf -y install epel-release dnf-plugins-core python2 cmake
     dnf -y config-manager --set-enabled powertools
 
-    dnf -y install python2
     alternatives --set python /usr/bin/python2
-    dnf -y install cmake
     rh_install dnf
+    ;;
+rhel/8*)
+    # need to do this ahead of time as it can be incredibly and painfully slow...
+    #subscription-manager repos --enable codeready-builder-for-rhel-8-x86_64-rpms
+
+    #dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+    rh_install dnf
+    alternatives --set python /usr/bin/python3
     ;;
 debian/*)
     PKG=apt-get
