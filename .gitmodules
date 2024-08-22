@@ -31,7 +31,7 @@
 	url = https://github.com/paulscherrerinstitute/StreamDevice.git
 [submodule "seq"]
 	path = seq
-	url = https://github.com/mdavidsaver/sequencer-mirror
+	url = https://github.com/epics-modules/sequencer
 [submodule "sscan"]
 	path = sscan
 	url = https://github.com/epics-modules/sscan.git
