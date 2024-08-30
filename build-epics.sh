@@ -95,7 +95,6 @@ git_module sscan
 git_module etherip
 git_module modbus
 git_module p4p
-git_module pscdrv-dev
 
 export EPICS_HOST_ARCH=`./epics-base/startup/EpicsHostArch`
 
@@ -196,14 +195,6 @@ PVXS=\$(TOP)/../pvxs
 EPICS_BASE=\$(TOP)/../epics-base
 EOF
 
-cat <<EOF > pscdrv-dev/configure/RELEASE.local
-EPICS_BASE=\$(TOP)/../epics-base
-EOF
-
-cat <<EOF > pscdrv-dev/configure/CONFIG_SITE.local
-USE_FFTW=YES
-EOF
-
 trap 'rm -f $PREFIX $TAR' TERM KILL HUP EXIT
 
 rm -f $PREFIX
@@ -246,7 +237,6 @@ do_module etherip
 do_module modbus
 do_module devsnmp
 do_module p4p
-do_module pscdrv-dev
 
 tar -rf $TAR $PREFIX/*.version
 

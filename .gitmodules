@@ -69,7 +69,3 @@
 	path = p4p
 	url = https://github.com/mdavidsaver/p4p.git
 	branch = master
-[submodule "pscdrv-dev"]
-	path = pscdrv-dev
-	url = https://github.com/mdavidsaver/pscdrv-dev.git
-	branch = ci
