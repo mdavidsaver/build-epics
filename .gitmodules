@@ -23,15 +23,12 @@
 [submodule "asyn"]
 	path = asyn
 	url = https://github.com/epics-modules/asyn.git
-[submodule "motor"]
-	path = motor
-	url = https://github.com/epics-modules/motor.git
 [submodule "stream"]
 	path = stream
 	url = https://github.com/paulscherrerinstitute/StreamDevice.git
 [submodule "seq"]
 	path = seq
-	url = https://github.com/mdavidsaver/sequencer-mirror
+	url = https://github.com/epics-modules/sequencer
 [submodule "sscan"]
 	path = sscan
 	url = https://github.com/epics-modules/sscan.git
@@ -41,18 +38,6 @@
 [submodule "modbus"]
 	path = modbus
 	url = https://github.com/epics-modules/modbus.git
-[submodule "ADCore"]
-	path = areaDetector/ADCore
-	url = https://github.com/areaDetector/ADCore.git
-[submodule "ADURL"]
-	path = areaDetector/ADURL
-	url = https://github.com/areaDetector/ADURL.git
-[submodule "pvaDriver"]
-	path = areaDetector/pvaDriver
-	url = https://github.com/areaDetector/pvaDriver.git
-[submodule "ADSimDetector"]
-	path = areaDetector/ADSimDetector
-	url = https://github.com/areaDetector/ADSimDetector.git
 [submodule "iocstats"]
 	path = iocstats
 	url = https://github.com/epics-modules/iocStats.git
