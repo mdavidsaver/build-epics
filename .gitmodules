@@ -54,3 +54,6 @@
 	path = p4p
 	url = https://github.com/mdavidsaver/p4p.git
 	branch = master
+[submodule "linStat"]
+	path = linStat
+	url = https://github.com/mdavidsaver/linStat

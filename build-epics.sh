@@ -91,6 +91,7 @@ git_module asyn
 git_module stream
 git_module seq
 git_module iocstats
+git_module linStat
 git_module sscan
 git_module etherip
 git_module modbus
@@ -146,6 +147,10 @@ EOF
 
 cat <<EOF >iocstats/configure/RELEASE
 SNCSEQ=\$(EPICS_BASE)/../seq
+EPICS_BASE=\$(TOP)/../epics-base
+EOF
+
+cat <<EOF >linStat/configure/RELEASE
 EPICS_BASE=\$(TOP)/../epics-base
 EOF
 
@@ -228,6 +233,7 @@ do_module autosave
 do_module recsync/client
 do_module seq
 do_module iocstats
+do_module linStat
 do_module asyn
 do_module busy
 do_module sscan
